@@ -1,0 +1,137 @@
+---
+type: job
+title: MyEffect
+description: A volunteering web and mobile platform tracking metrics for the Sustainable Development Goals. Finding you opportunities to grow your Impact Resume.
+date: 2011-08-17
+repo: NA-mye
+published: true
+featured: false
+---
+
+As a social media platform dedicated to volunteering, offering social impact tracking services for both organizations and individuals. As a volunteer, you can monitor your contributions to the Sustainable Development Goals, just as organizations track their company-wide impact.
+
+|  Tech Stack  |       |         |            |        |     |
+| :----------: | :---: | :-----: | :--------: | :----: | --- |
+| React Native | React | GraphQL |   Apollo   | Prisma |     |
+|   Postgres   | Node  | Express | TypeScript |  Jest  |     |
+| Material UI  | Figma | Docker  |            |        |     |
+
+##### 6 Full Stack Software Highlights
+
+1. Proficient mobile developer in React Native and web app developer in React
+2. Maintained robust server side systems proficient database design and built services
+3. Quick study of content and methods, I know the details and sweats the details
+4. Quick and efficient development with a strong work ethic (not afraid of the grind), resilient in the face of feedback and self managed
+5. Excelled in component architecture, data flow, and constantly brought structure to ambiguity
+6. Empathetic UI designer, perfect understanding of navigation and layout flexibility
+
+[![SDG Goals](/sdg_goals.png 'Sustainable Development Goals')](https://sdgs.un.org/goals)
+
+## Development
+
+### Backend
+
+##### Highlights:
+
+1. Built GraphQL resolvers for primary features:
+
+- Check in/out
+- Requesting to take/schedule user for a shift
+- Viewing/editing information
+
+2. Built fully featured Subscription resolvers with Push Notification service, working with mobile and web clients
+3. User authentication and server side Authorization for web and mobile clients using access and refresh of JWT
+4. Defined relational data models, gathered requirements, vetted normalization, security, and iteration, and planned migration tactics for production
+
+Illustrated below is a section of how notifications for checking in/out and hours contribution are modeled.
+
+```tsx
+// Check-in and out times of a shift notification
+type NotificationStatus {
+id: ID! @id
+sender_user_notification: UserNotification!
+@relation(link: INLINE,
+name: "UserNotificiationToNotificationGroupMember",
+onDelete: SET_NULL)
+receiver_group_notification: GroupNotification!
+@relation(link: INLINE,
+name: "GroupNotificationToNotificationGroupMember",
+onDelete: SET_NULL)
+message: String
+is_checked: Boolean! @default(value: false)
+is_answered: Boolean! @default(value: false)
+is_accepted: Boolean! @default(value: false)
+}
+```
+
+```tsx
+// Check-in and out times of a shift
+type Report {
+id: ID! @id
+reported_in_by: ID
+reported_out_by: ID
+check_in: DateTime
+check_out: DateTime
+updatedAt: DateTime! @updatedAt
+createdAt: DateTime! @createdAt
+}
+// Model is used to accurately track hours,
+// Provides 1 level of validation.
+```
+
+An example of how our app provides organizations, individuals and the United Nations progress analysis, in relation to the 2030 accurately.
+
+[![Not MyEffects metrics](/sdg_progression.png 'Sdg progress chart')](https://unstats.un.org/sdgs/report/2023/)
+
+### Mobile
+
+##### Highlights:
+
+- Standardize state management with Apollo GraphQL and reactive variables
+- Implemented check in/out navigation and functionality, optimizing performance with useMemo and useCallback hooks
+- Unit tested with Jest, functions example:
+- Checking-in/out of shifts
+- Requesting to take/schedule user for a shift
+- Selecting and viewing shifts
+
+### Web
+
+##### Highlights:
+
+- Implemented check in/out navigation and functionality, optimizing performance with useMemo and useCallback hooks
+- Rewrote components for accessibility features like language selection with a11y, font sizing using styled components
+
+- Created:
+- Landing page
+- New user onboarding flow
+- Group and Action creation and editing flow
+- A Position and Shift scheduler creation and editing flow
+- User, Group, Action profiles pages
+- Converted web app to typescript, beginning with type annotating components, functions, variables, props, and state
+
+![](/myeffect_homepage.png)
+
+### Designing
+
+##### Highlights:
+
+- Mentored and collaborated with designer to build the design system and component library using Material UI
+- Collaborated in User persona, User Journey Mapping, Wireframing, and Prototyping
+- Reviewed, established and streamlined design principles and took foundational components to development in web client
+
+<iframe
+  width='100%'
+  height='700'
+  src='https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FyKnc5K7wcVh70Eue3wOx89%2FUntitled%3Fpage-id%3D0%253A1%26type%3Ddesign%26node-id%3D1-3%26viewport%3D-437%252C2408%252C1.24%26t%3D0wDjKl5Y0utHLWwK-1%26scaling%3Dscale-down%26starting-point-node-id%3D1%253A3%26mode%3Ddesign'
+  allowfullscreen
+></iframe>
+
+### Business Strategy / Growth
+
+I wrote a comprehensive development plan within the scope of MyEffect's mission. Outlining deliverables, impactful features with support in decision-making.
+Focusing on development, Here strategies I used when positioning MyEffect's development future.
+
+1. Goal Setting: Wrote objectives providing direction and purpose for development efforts based on the mission and vision of the organization
+2. SWOT Analysis: Provided analysis evaluating strengths, weaknesses, opportunities, and threats within development and team capabilities
+3. Feedback and Reflection: Continuously seeking feedback from mentors, peers, or self-assessment to evaluate progress and make necessary adjustments to your development plan
+4. Learning and Skill Development: Focusing on acquiring new knowledge and skills that are relevant to your goals and career growth
