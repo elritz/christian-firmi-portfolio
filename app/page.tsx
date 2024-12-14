@@ -29,17 +29,16 @@ export default function Home() {
           quantity={100}
         />
         <div className='h-screen flex  items-center justify-center w-screen'>
-          <div className='flex-1 py-11 flex-col '>
+          <div className='flex-1 py-11 flex-col'>
             <nav className='flex justify-center animate-fade-in relative z-50'>
               <ul className='flex align-center justify-center gap-4 z-50'>
-                {navigation.map((item) => (
+                {navigation.map((item, index) => (
                   <Link
-                    key={item.href}
                     target={item.target}
                     href={item.href}
                     className='text-md duration-200 text-zinc-500 hover:text-zinc-900 xs:text-md sm:text-md lg md:text-xl lg:text-xl flex flex-row justify-center items-center'
                   >
-                    {item.name}
+                    <p key={index}>{item.name}</p>
                   </Link>
                 ))}
               </ul>
@@ -51,9 +50,9 @@ export default function Home() {
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <div className='my-16 text-center animate-fade-in'>
               <h2 className='text-md text-zinc-500 '>
-                Hi, my name is Christian, I'm a software engineer. I work with
-                TypeScript and am currently working towards better understanding
-                Data structures and GOLANG <br />
+                Hi, my name is Christian, I&apos;m a software engineer. I work
+                with TypeScript and am currently working towards better
+                understanding Data structures and GOLANG <br />
                 and working at night on{' '}
                 <Link
                   target='_blank'
@@ -67,14 +66,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* {allPosts.map((post) => (
-        <article key={post._id}>
-          <Link href={post.slug}>
-            <h2>{post.title}</h2>
-          </Link>
-          {post.description && <p>{post.description}</p>}
-        </article>
-      ))} */}
       </div>
     </div>
   );
