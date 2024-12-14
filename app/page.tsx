@@ -31,7 +31,7 @@ export default function Home() {
         <div className='h-screen flex  items-center justify-center w-screen'>
           <div className='flex-1 py-11 flex-col'>
             <nav className='flex justify-center animate-fade-in relative z-50'>
-              <ul className='flex align-center justify-center gap-4 z-50'>
+              {/* <ul className='flex align-center justify-center gap-4 z-50'>
                 {navigation.map((item, index) => (
                   <Link
                     target={item.target}
@@ -41,7 +41,7 @@ export default function Home() {
                     <p key={index}>{item.name}</p>
                   </Link>
                 ))}
-              </ul>
+              </ul> */}
             </nav>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <h1 className='-z-10 mt-4 text-8xl  decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
