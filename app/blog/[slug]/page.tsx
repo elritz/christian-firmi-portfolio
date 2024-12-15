@@ -51,7 +51,7 @@ export default async function Blog({ params }: { params: { slug: string } }) {
         }}
       />
       <MdxLayout post={post}>
-        <div className=''>
+        <div>
           <article className='px-4 py-12 mx-auto prose prose-zinc prose-quoteless'>
             <CustomMDX source={post.content} />
           </article>

@@ -87,16 +87,71 @@ function createHeading(level) {
 }
 
 let components = {
-  h1: createHeading(1),
-  h2: createHeading(2),
-  h3: createHeading(3),
-  h4: createHeading(4),
-  h5: createHeading(5),
-  h6: createHeading(6),
+  // h1: createHeading(1),
+  // h2: createHeading(2),
+  // h3: createHeading(3),
+  // h4: createHeading(4),
+  // h5: createHeading(5),
+  // h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
   Table,
+  p: (props) => <p className='text-gray-900 dark:text-gray-100' {...props} />,
+  h1: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  h2: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  h3: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  h4: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  h5: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  h6: (props) => (
+    <h1
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  ul: (props) => (
+    <ul
+      className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
+  strong: (props) => (
+    <strong
+      className='list-disc  text-gray-900 dark:text-gray-100'
+      {...props}
+    />
+  ),
+  ol: (props) => (
+    <ol
+      className='list-decimal text-gray-900 dark:text-gray-100 list-inside'
+      {...props}
+    />
+  ),
 };
 
 export function CustomMDX(props) {

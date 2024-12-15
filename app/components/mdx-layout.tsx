@@ -9,7 +9,7 @@ export default function MdxLayout({
 }) {
   // Create any shared layout or styles here
   return (
-    <div className=''>
+    <div>
       <Header post={post} />
       {children}
     </div>

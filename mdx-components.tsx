@@ -56,7 +56,7 @@ const components = {
   h6: ({ className, ...props }) => (
     <h6
       className={clsx(
-        'mt-8 scroll-m-20 text-base font-semibold tracking-tight',
+        'mt-8 scroll-m-20 text-base font-semibold tracking-tight text-cyan-500',
         className
       )}
       {...props}
@@ -65,7 +65,7 @@ const components = {
   a: ({ className, ...props }) => (
     <Link
       className={clsx(
-        'font-medium text-zinc-900 underline underline-offset-4',
+        'font-medium text-zinc-900 underline underline-offset-4 ',
         className
       )}
       {...props}
@@ -73,7 +73,10 @@ const components = {
   ),
   p: ({ className, ...props }) => (
     <p
-      className={clsx('leading-7 [&:not(:first-child)]:mt-6', className)}
+      className={clsx(
+        'leading-7 [&:not(:first-child)]:mt-6 text-zinc-400',
+        className
+      )}
       {...props}
     />
   ),

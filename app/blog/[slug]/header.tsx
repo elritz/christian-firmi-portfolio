@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { Metadata } from '../utils';
 import { useRouter } from 'next/navigation';
+import { ModeToggle } from '@/app/components/mode-toggle';
 
 type Props = {
   post: {
@@ -64,7 +65,7 @@ export const Header: React.FC<Props> = ({ post }) => {
               />
             </Link>
           </div>
-
+          <ModeToggle />
           <a
             onClick={() => router.back()}
             className={`duration-200 hover:font-medium ${
