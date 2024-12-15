@@ -2,50 +2,10 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ThemeProvider } from '@/app/components/theme-provider';
-import { Analytics } from '@/app/components/analytics';
 import { ModeToggle } from '@/app/components/mode-toggle';
 import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: {
-    default: 'elritz',
-    template: '%s | christianfirmi',
-  },
-  description: 'Software engineer ',
-  openGraph: {
-    title: 'christianfirmi.com',
-    description: 'Software engineer',
-    url: 'https://christianfirmi.com',
-    siteName: 'christianfirmi.com',
-    images: [
-      {
-        url: 'https://christianfirmi.com/og.png',
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    locale: 'en-US',
-    type: 'website',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  twitter: {
-    title: 'christianfirmi',
-    card: 'summary_large_image',
-  },
-  icons: {
-    shortcut: '/favicon.png',
-  },
-};
+import { Analytics } from '@vercel/analytics/react';
+import { baseUrl } from './sitemap';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -61,9 +21,44 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
+export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'Next.js Portfolio Starter',
+    template: '%s | Next.js Portfolio Starter',
+  },
+  description: 'This is my portfolio.',
+  openGraph: {
+    title: 'My Portfolio',
+    description: 'This is my portfolio.',
+    url: baseUrl,
+    siteName: 'My Portfolio',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
+
+const cx = (...classes) => classes.filter(Boolean).join(' ');
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='en' className={[inter.variable, calSans.variable].join(' ')}>
+    <html
+      lang='en'
+      className={
+        (cx('text-black bg-white dark:text-white dark:bg-black'),
+        [inter.variable, calSans.variable].join(' '))
+      }
+    >
       <body
         className={`bg-white ${
           process.env.NODE_ENV === 'development' ? 'debug-screens' : undefined
@@ -71,8 +66,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           <main>{children}</main>
-          {/* </div> */}
-          <Analytics />
         </ThemeProvider>
       </body>
     </html>

@@ -1,11 +1,8 @@
 import { notFound } from 'next/navigation';
-
-import { Header } from './header';
-import { ReportView } from './view';
-
 import { CustomMDX } from '@/app/components/mdx';
-import { formatDate, getBlogPosts } from '@/app/blog/utils';
+import { getBlogPosts } from '@/app/blog/utils';
 import { baseUrl } from '@/app/sitemap';
+import MdxLayout from '@/app/components/mdx-layout';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -14,17 +11,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }: { params: { slug: string } }) {
   let post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
     return;
   }
 
   let { title, date, description, repo, published } = post.metadata;
-  // let ogImage = image
-  //   ? image
-  //   : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
-
   return {
     title,
     description,
@@ -33,9 +26,7 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function Blog({ params }) {
-  console.log('🚀 ~ file: page.tsx:67 ~ Blog ~ params:', params);
-
+export default async function Blog({ params }: { params: { slug: string } }) {
   let post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
@@ -59,10 +50,13 @@ export default function Blog({ params }) {
           }),
         }}
       />
-      <Header post={post} />
-      <article className='px-4 py-12 mx-auto prose prose-zinc prose-quoteless'>
-        <CustomMDX source={post.content} />
-      </article>
+      <MdxLayout post={post}>
+        <div className=''>
+          <article className='px-4 py-12 mx-auto prose prose-zinc prose-quoteless'>
+            <CustomMDX source={post.content} />
+          </article>
+        </div>
+      </MdxLayout>
     </section>
   );
 }

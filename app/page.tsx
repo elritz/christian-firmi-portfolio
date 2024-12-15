@@ -3,7 +3,6 @@ import Particles from '@/app/components/particles';
 const navigation = [
   { name: 'Projects', href: '/blog' },
   { name: 'Contact', href: '/contact' },
-  // { name: "Q&A", href: "/q&a" },
   {
     name: 'Github',
     href: 'https://github.com/elritz',
@@ -20,6 +19,7 @@ const navigation = [
     target: 'blank',
   },
 ];
+
 export default function Home() {
   return (
     <div className='dark:prose-invert'>

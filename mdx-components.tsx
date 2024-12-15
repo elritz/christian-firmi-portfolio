@@ -160,7 +160,6 @@ const components = {
       {...props}
     />
   ),
-  Image,
 };
 
 interface MdxProps {

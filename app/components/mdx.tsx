@@ -93,7 +93,6 @@ let components = {
   h4: createHeading(4),
   h5: createHeading(5),
   h6: createHeading(6),
-  p: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
@@ -102,9 +101,12 @@ let components = {
 
 export function CustomMDX(props) {
   return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
+    <div>
+      {/* @ts-expect-error Server Component */}
+      <MDXRemote
+        {...props}
+        components={{ ...components, ...(props.components || {}) }}
+      />
+    </div>
   );
 }

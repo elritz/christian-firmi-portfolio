@@ -24,22 +24,42 @@ function parseFrontmatter(fileContent: string) {
     let [key, ...valueArr] = line.split(': ')
     let value = valueArr.join(': ').trim()
     value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
+    let trimmedKey = key.trim() as keyof Metadata
+    if (trimmedKey === 'published' || trimmedKey === 'current') {
+      metadata[trimmedKey] = value === 'true' as any
+    } else {
+      metadata[trimmedKey] = value as any
+    }
   })
 
   return { metadata: metadata as Metadata, content }
 }
 
-function getMDXFiles(dir) {
+interface GetMDXFiles {
+  (dir: string): string[]
+}
+
+const getMDXFiles: GetMDXFiles = (dir) => {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
 }
 
-function readMDXFile(filePath) {
+interface ParsedFrontmatter {
+  metadata: Metadata
+  content: string
+}
+
+function readMDXFile(filePath: string): ParsedFrontmatter {
   let rawContent = fs.readFileSync(filePath, 'utf-8')
   return parseFrontmatter(rawContent)
 }
 
-function getMDXData(dir) {
+interface MDXData {
+  metadata: Metadata
+  slug: string
+  content: string
+}
+
+function getMDXData(dir: string): MDXData[] {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file))
