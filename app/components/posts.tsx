@@ -71,9 +71,9 @@ export function BlogPosts() {
                           </div>
                           <h2 className='z-20 text-xl font-medium lg:text-3xl group-hover:text-black dark:group-hover:text-white font-display'>
                             {post.metadata.title}
-                            <p className='text-base group-hover:text-zinc-800 dark:group-hover:text-white'>
+                            {/* <p className='text-base group-hover:text-zinc-800 dark:group-hover:text-white'>
                               {post.metadata.type}
-                            </p>
+                            </p> */}
                           </h2>
                           <p className='z-20 mt-4 text-sm dark:group-hover:text-white group-hover:text-zinc-800'>
                             {post.metadata.description}

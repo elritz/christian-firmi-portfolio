@@ -1,13 +1,3 @@
-// const { withContentlayer } = require('next-contentlayer');
-
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   reactStrictMode: true,
-//   swcMinify: true,
-// };
-
-// module.exports = withContentlayer(nextConfig);
-
 import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';
 
@@ -16,9 +6,7 @@ const nextConfig = {
   transpilePackages: ['next-mdx-remote'],
   reactStrictMode: true,
   swcMinify: true,
-  // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  // Optionally, add any other Next.js config below
 };
 
 const withMDX = createMDX({
@@ -26,6 +14,7 @@ const withMDX = createMDX({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [['rehype-katex', { strict: true, throwOnError: true }]],
   },
+  extension: /\.mdx$/,
   // Add markdown plugins here, as desired
 });
 

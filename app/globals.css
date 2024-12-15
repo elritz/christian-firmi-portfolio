@@ -148,6 +148,22 @@ table {
   white-space: nowrap;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
 .title {
   text-wrap: balance;
 }

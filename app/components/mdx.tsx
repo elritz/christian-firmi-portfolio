@@ -105,31 +105,31 @@ let components = {
     />
   ),
   h2: (props) => (
-    <h1
+    <h2
       className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
       {...props}
     />
   ),
   h3: (props) => (
-    <h1
+    <h3
       className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
       {...props}
     />
   ),
   h4: (props) => (
-    <h1
+    <h4
       className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
       {...props}
     />
   ),
   h5: (props) => (
-    <h1
+    <p
       className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
       {...props}
     />
   ),
   h6: (props) => (
-    <h1
+    <p
       className='list-disc  text-gray-900 dark:text-gray-100 list-inside'
       {...props}
     />
@@ -156,7 +156,7 @@ let components = {
 
 export function CustomMDX(props) {
   return (
-    <div>
+    <div className='prose mx-auto'>
       {/* @ts-expect-error Server Component */}
       <MDXRemote
         {...props}
