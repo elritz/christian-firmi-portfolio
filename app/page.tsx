@@ -15,7 +15,7 @@ const navigation = [
   },
   {
     name: 'Resume',
-    href: 'https://docs.google.com/document/d/1Bjt-_Rbh_Ffq987QkP6dcH3B9hsCBhRDG1O0Fv_0ew4/edit?usp=sharing',
+    href: 'https://docs.google.com/document/d/1tk75fasz7oPB21Wo9JlYjSBEEzLv0XUoaGCHdFRaTMY/edit?usp=sharing',
     target: 'blank',
   },
 ];

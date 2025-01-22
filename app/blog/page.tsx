@@ -10,12 +10,10 @@ export default async function ProjectsPage() {
       <div className='px-6 pt-16 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32 w-[75%]'>
         <div className='max-w-2xl mx-auto lg:mx-0'>
           <h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>
-            Projects & Jobs
+            Projects & Professional Jobs
           </h2>
           <p className='mt-4'>
-            Some of the projects are from work and some are on my own time. I
-            explain what i am trying to achieve with each project and what i
-            have learned.
+            Some of these projects were completed as part of my professional work, while others were personal endeavors. For each, I detail my goals, the challenges I faced, and the lessons I learned along the way.
           </p>
         </div>
         <BlogPosts />

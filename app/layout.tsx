@@ -24,8 +24,8 @@ interface RootLayoutProps {
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Next.js Portfolio Starter',
-    template: '%s | Next.js Portfolio Starter',
+    default: 'Christian Firmi',
+    template: '%s | Christian Firmi',
   },
   description: 'This is my portfolio.',
   openGraph: {
@@ -56,13 +56,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       lang='en'
       className={
         (cx('text-black bg-white dark:text-white dark:bg-black'),
-        [inter.variable, calSans.variable].join(' '))
+          [inter.variable, calSans.variable].join(' '))
       }
     >
       <body
-        className={`bg-white ${
-          process.env.NODE_ENV === 'development' ? 'debug-screens' : undefined
-        } selection:bg-orange-500 selection:text-white`}
+        className={`bg-white ${process.env.NODE_ENV === 'development' ? 'debug-screens' : undefined
+          } selection:bg-orange-500 selection:text-white`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           <main>{children}</main>
