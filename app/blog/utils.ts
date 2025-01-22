@@ -4,6 +4,7 @@ import path from 'path'
 export type Metadata = {
   title: string
   date: string
+  star?: boolean
   description: string
   published: boolean
   current?: boolean

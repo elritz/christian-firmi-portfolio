@@ -48,7 +48,7 @@ export function BlogPosts() {
                       <div className='flex items-center justify-between gap-2'>
                         <article className='relative w-full h-full p-4 md:p-8'>
                           <div className='flex justify-between gap-2 items-center'>
-                            <span className='text-xs group-hover:text-black dark:group-hover:text-white group-hover:border-zinc-800 drop-shadow-orange'>
+                            <span className='text-xs justify-between group-hover:text-black dark:group-hover:text-white group-hover:border-zinc-800 drop-shadow-orange'>
                               {post.metadata.date ? (
                                 <time
                                   dateTime={new Date(
@@ -63,10 +63,11 @@ export function BlogPosts() {
                                 <span>SOON</span>
                               )}
                             </span>
-                            <div className='flex flex-col space-y-1'>
+                            <div className='flex flex-row gap-3 space-y-1'>
                               <div>
                                 {post.metadata.current ? 'Current' : ''}
                               </div>
+                              {post.metadata.star ? '⭐️' : ''}
                             </div>
                           </div>
                           <h2 className='z-20 text-xl font-medium lg:text-3xl group-hover:text-black dark:group-hover:text-white font-display'>
