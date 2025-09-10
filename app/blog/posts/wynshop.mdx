@@ -1,90 +1,55 @@
 ---
 type: professional
 title: Wynshop
-description: 'Offer customers the convenience of shopping on the go with a full-featured mobile extension of Wynshop Commerce – a unified experience for both the shopper and the grocery retailer.'
+description: 'Mobile extension for Wynshop Commerce: fast, scalable, and retailer-focused grocery shopping.'
 date: 2023-11-04
 url: https://wynshop.com/
 published: true
 current: true
 ---
 
-Retailers can deploy sophisticated digital storefronts, personalize their shopper's journey, monetize digital ad space, and optimize in-store picking and fulfillment with Wynshop. With the ability to easily integrate with other industry solutions, Wynshop’s modular, scalable, and intelligent technology makes it the preferred platform for leading grocers.
+### Summary
 
-##### Engineering Highlights
+- Member of the core Golden Goose (GG) mobile team. Focus: stabilize and speed up the global React Native app used by 20+ organizations and with multiple banners.
+- Delivered performance, reliability, and build improvements while adding core features.
+- Wrote app and brand onboarding creation documentation.
 
-1. Android and iOS performance optimization
-2. Core feature development
-3. Cross team collaboration and team leadership
-4. Global deployments
+### Role & Scope
 
-## Tech Stack:
+- Platform: Expo / React Native (bridgeless)
+- Team: 4 developers (on join), global deployments, multi-banner configuration
+- Key features: Made-to-Order, staging/production banners, global rollouts
 
-• Expo
-• React Native
-• React
-• GraphQL
-• Apollo
-• Prisma
-• Postgres
-• Node
-• Express
-• TypeScript
-• Jest
-• Docker
-• GO
-• AWS
-• Material UI
-• Figma
+### Key Contributions
 
-## Development
+- Performance
+  - Faster local storage with MMKV
+  - Replaced FlatList with FlashList for better list rendering
+  - Improved API caching and response handling
+  - Removed unused/old node_modules to reduce bloat
+- Modernization
+  - Migrated to bridgeless React Native
+  - Adopted Redux for state management
+  - Utilized React Query Cache (v3 → v5)
+- Build & CI
+  - Moved builds to Mac Mini, cutting build time ~33% (45 → 15 min)
+  - Streamlined build scripts for faster CI
+- Process & Collaboration
+  - Cross-team coordination and documentation for banners and deploys
+
+### Tech Stack (selected)
+
+- Expo, React Native, React, TypeScript
+- GraphQL, Apollo, Prisma, Postgres
+- Node, Express, Docker, AWS, Go
+- Jest, Material UI, Figma
+
+# App
+
+### Wynshop Partners
+
+![Wynshop brand](/wynshop/brands.png)
 
 ### Mobile
 
-##### Highlights:
-
-- Made to Order feature development
-- Staging and Production banner creation and documentation
-- Architecture optimizations, script optimization and global deployments
-
-# Wynshop Contributions
-
-At Wynshop, I am part of the **core team**, specifically on the Golden Goose (GG) mobile team. Our team works globally with 20+ organizations and manages configurations for over 40 banners. _(Banners represent different brands under the main retailer organization.)_
-
-When I joined, the GG mobile team consisted of 4 developers and faced significant pressure to re-establish the mobile application. During review sessions, we identified major UI/UX discrepancies and severe performance issues.
-
-## Key Achievements
-
-### Performance Improvements
-
-We implemented several solutions to address performance bottlenecks:
-
-- **Optimized API Response Handling**:
-  - Proper cache utilization for faster data retrieval.
-- **Faster Local Storage**:
-  - Integrated **MMKV** for significantly improved storage speeds.
-- **List Rendering Optimization**:
-  - Replaced `FlatList` with **FlashList** for enhanced rendering performance.
-- **Streamlined Dependencies**:
-  - Conducted a thorough review of `node_modules` to eliminate unused or outdated modules.
-
-### Upgrades and Modernization
-
-- **React Native Upgrade**:
-  - Migrated to a **bridgeless architecture** for better performance and maintainability.
-- **State Management Enhancements**:
-  - Integrated **Redux** for efficient state management.
-- **React Query Migration**:
-  - Migrated from version 3 to version 5 for improved data fetching and caching.
-- **Animation Framework Updates**:
-  - Upgraded to the latest version of **Reanimated**.
-
-### Build Optimization
-
-- **Faster Build Times**:
-  - Transitioned builds to **Mac Mini**, reducing build times by 33% (from 45 minutes to 15 minutes).
-- **Optimized Build Scripts**:
-  - Streamlined scripts to further accelerate the build process.
-
----
-
-Through these contributions, our team successfully stabilized and enhanced the mobile application, delivering a faster, more reliable, and user-friendly experience for global clients.
+![Wynshop app](/wynshop/shop_rite_app.png)

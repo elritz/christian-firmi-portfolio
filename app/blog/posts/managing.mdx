@@ -11,7 +11,7 @@ featured: false
 A microservice that can be used in a standalone API or federated graphql supergraph. It's used to manage devices and for inter service communication. The encryption
 key never leaves server side.
 
-## Reflection
+### Reflection
 
 Microservices are challenging to manage due to their inherent trade-offs between immediate benefits and long-term maintenance. While they can simplify initial development by isolating functionality and enabling independent team workflows, they often shift complexity rather than reducing it. This became evident as I transitioned from implementing microservices to managing their ongoing operations.
 
@@ -21,7 +21,7 @@ One key realization is that while microservices can streamline development in th
 
 Ultimately, I’ve learned that microservices are most effective when aligned with well-defined business domains and supported by teams equipped to manage the added complexity. Without these, the trade-offs can outweigh the benefits, making other architectural patterns more suitable in certain scenarios.
 
-## Tech Stack
+### Tech Stack
 
 • GraphQL
 • Apollo
@@ -42,36 +42,36 @@ Here’s an expanded explanation of each service and its role within the system:
 Chat Messaging Service
 
 This service is responsible for enabling real-time communication between users in the application. Its features include:
-	•	Authorization with Refresh and Access Tokens:
-	•	Uses access tokens for secure, short-lived authentication of chat requests.
-	•	Implements refresh tokens to issue new access tokens when the original expires, ensuring uninterrupted user sessions.
-	•	Tokens are validated for every chat-related action (e.g., sending, receiving, or reading messages) to maintain security.
-	•	Additional Capabilities:
-	•	Handles message delivery status (e.g., sent, delivered, read receipts).
-	•	Implements scalable communication using technologies like WebSockets, Firebase, or SignalR for real-time updates.
-	•	Provides end-to-end encryption for private messaging to enhance data privacy and security.
+• Authorization with Refresh and Access Tokens:
+• Uses access tokens for secure, short-lived authentication of chat requests.
+• Implements refresh tokens to issue new access tokens when the original expires, ensuring uninterrupted user sessions.
+• Tokens are validated for every chat-related action (e.g., sending, receiving, or reading messages) to maintain security.
+• Additional Capabilities:
+• Handles message delivery status (e.g., sent, delivered, read receipts).
+• Implements scalable communication using technologies like WebSockets, Firebase, or SignalR for real-time updates.
+• Provides end-to-end encryption for private messaging to enhance data privacy and security.
 
 Authentication Service
 
 This service handles user identity management and ensures secure access to the application. Its features include:
-	•	Device and Account Management:
-	•	Tracks and manages active sessions across multiple devices for a single user account.
-	•	Provides tools to revoke specific device sessions or enforce logout across all devices in case of compromised credentials.
-	•	Implements device-level recognition (e.g., using a unique device ID) to enhance security and user experience.
-	•	Pre-Server Validations:
-	•	Ensures that user credentials, tokens, or sensitive data are validated locally before being sent to the server, reducing unnecessary network traffic.
-	•	Can incorporate multi-factor authentication (MFA) for additional security layers.
+• Device and Account Management:
+• Tracks and manages active sessions across multiple devices for a single user account.
+• Provides tools to revoke specific device sessions or enforce logout across all devices in case of compromised credentials.
+• Implements device-level recognition (e.g., using a unique device ID) to enhance security and user experience.
+• Pre-Server Validations:
+• Ensures that user credentials, tokens, or sensitive data are validated locally before being sent to the server, reducing unnecessary network traffic.
+• Can incorporate multi-factor authentication (MFA) for additional security layers.
 
 Profiling Service
 
 This service focuses on account-related functionalities to enhance user control and security. Key features include:
-	•	Sign Out from All Devices:
-	•	Allows users to remotely log out from all devices in scenarios such as account recovery or suspected unauthorized access.
-	•	Clears tokens and invalidates active sessions for all devices connected to the user’s account.
-	•	Updates the system database to reflect the session changes in real time.
-	•	Additional Features:
-	•	Tracks and displays the list of active sessions/devices for user visibility.
-	•	Supports granular sign-out actions, such as logging out from specific devices while keeping others active.
-	•	Enables activity monitoring to flag unusual behaviors (e.g., logins from unfamiliar locations).
+• Sign Out from All Devices:
+• Allows users to remotely log out from all devices in scenarios such as account recovery or suspected unauthorized access.
+• Clears tokens and invalidates active sessions for all devices connected to the user’s account.
+• Updates the system database to reflect the session changes in real time.
+• Additional Features:
+• Tracks and displays the list of active sessions/devices for user visibility.
+• Supports granular sign-out actions, such as logging out from specific devices while keeping others active.
+• Enables activity monitoring to flag unusual behaviors (e.g., logins from unfamiliar locations).
 
 These services work together to provide a secure, user-friendly, and scalable platform. If you’d like, I can help refine their architecture, suggest specific technologies, or provide implementation ideas for any of these features.
