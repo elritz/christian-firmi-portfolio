@@ -15,7 +15,7 @@ const navigation = [
   },
   {
     name: 'Resume',
-    href: 'https://docs.google.com/document/d/1tk75fasz7oPB21Wo9JlYjSBEEzLv0XUoaGCHdFRaTMY/edit?usp=sharing',
+    href: 'https://docs.google.com/document/d/1uJqZW2q1oUYcBP73D3T8cctyWdCmDisV2QFCsKNEZU0/edit?usp=sharing',
     target: 'blank',
   },
 ];
@@ -50,7 +50,7 @@ export default function Home() {
             </h1>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <div className='my-16 text-center animate-fade-in'>
-              <h2 className='text-md text-zinc-500 '>
+              <h2 className='text-md text-zinc-500  mx-auto leading-2 md:text-xl md:w-[60%] lg:w-[60%]'>
                 Hi, my name is Christian, I&apos;m a software engineer. I work
                 with TypeScript and am currently working towards better
                 understanding Data structures and GOLANG <br />
