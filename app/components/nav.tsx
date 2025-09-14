@@ -31,13 +31,13 @@ export const Navigation: React.FC = () => {
           <div className='flex justify-between gap-8'>
             <Link
               href='/blog'
-              className='duration-200 text-zinc-600 hover:text-zinc-900 hover:underline'
+              className='duration-200 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 hover:underline'
             >
               Projects
             </Link>
             <Link
               href='/contact'
-              className='duration-200 text-zinc-600 hover:text-zinc-900 hover:underline'
+              className='duration-200 text-zinc-600 hover:text-zinc-900 dark:text-zinc-200 hover:underline'
             >
               Contact
             </Link>
@@ -46,7 +46,7 @@ export const Navigation: React.FC = () => {
           <ModeToggle />
           <Link
             href='/'
-            className='duration-200 text-zinc-600 hover:text-zinc-900'
+            className='duration-200 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900'
           >
             <ArrowLeft className='w-6 h-6 ' />
           </Link>

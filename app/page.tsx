@@ -23,7 +23,7 @@ const navigation = [
 export default function Home() {
   return (
     <div className='dark:prose-invert'>
-      <div className='flex flex-col items-center justify-center overflow-x-hidden bg-gradient-to-tl from-white via-zinc-600/20 to-slate-200'>
+      <div className='flex flex-col items-center justify-center overflow-x-hidden bg-gradient-to-tl from-white dark:from-zinc-700 via-zinc-600/20 to-slate-200'>
         <Particles
           className='absolute inset-0 -z-10 animate-fade-in'
           quantity={100}
@@ -37,7 +37,7 @@ export default function Home() {
                     key={index}
                     target={item.target}
                     href={item.href}
-                    className='text-md duration-200 text-zinc-500 hover:text-zinc-900 xs:text-md sm:text-md lg md:text-xl lg:text-xl flex flex-row justify-center items-center'
+                    className='text-md dark:text-zinc-200 duration-200 text-zinc-500 hover:text-zinc-900 xs:text-md sm:text-md lg md:text-xl lg:text-xl flex flex-row justify-center items-center'
                   >
                     <p>{item.name}</p>
                   </Link>
@@ -45,16 +45,13 @@ export default function Home() {
               </ul>
             </nav>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
-            <h1 className='-z-10 mt-4 text-8xl  decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
+            <h1 className='-z-10 mt-4 text-8xl dark:text-zinc-200 decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
               elritz
             </h1>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <div className='my-16 text-center animate-fade-in'>
-              <h2 className='text-md text-zinc-500  mx-auto leading-2 md:text-xl md:w-[60%] lg:w-[60%]'>
-                Hi, my name is Christian, I&apos;m a software engineer. I work
-                with TypeScript and am currently working towards better
-                understanding Data structures and GOLANG <br />
-                and working at night on{' '}
+              <h2 className='text-md text-zinc-500 dark:text-zinc-200  mx-auto leading-2 md:text-xl md:w-[60%] lg:w-[60%]'>
+                Hi, my name is Christian, I&apos;m a software engineer.
                 <Link
                   target='_blank'
                   href='https://barfriends.com/'

@@ -78,7 +78,7 @@ export const Header: React.FC<Props> = ({ post }) => {
           </a>
         </div>
       </div>
-      <div className='container mx-auto relative isolate overflow-hidden sm:py-32'>
+      <div className='container mx-auto relative isolate overflow-hidden sm:py-32 mt-20'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8 text-center flex flex-col items-center'>
           <div className='mx-auto max-w-2xl lg:mx-0'>
             <h1 className='text-4xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-6xl font-display'>

@@ -60,7 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       }
     >
       <body
-        className={`bg-white ${process.env.NODE_ENV === 'development' ? 'debug-screens' : undefined
+        className={`bg-white dark:bg-black ${process.env.NODE_ENV === 'development' ? 'debug-screens' : undefined
           } selection:bg-orange-500 selection:text-white`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>

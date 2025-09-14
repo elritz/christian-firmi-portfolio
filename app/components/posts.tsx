@@ -30,7 +30,7 @@ export function BlogPosts() {
         .map((type) => (
           <div key={type}>
             <h2 className='text-3xl capitalize font-bold mb-4'>{type}</h2>
-            <div className='grid grid-flow-row-dense gap-8 mx-auto grid-cols-2'>
+            <div className='grid grid-flow-row-dense gap-8 mx-auto grid-cols-1 sm:grid-cols-2'>
               {blogsByType[type]
                 .sort((a, b) => {
                   if (new Date(a.metadata.date) > new Date(b.metadata.date)) {
