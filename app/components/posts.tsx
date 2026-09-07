@@ -2,13 +2,10 @@ import Link from 'next/link';
 import { getBlogPosts } from '@/app/blog/utils';
 import { Card } from './card';
 
+const TYPE_ORDER = ['professional', 'projects', 'travel', 'hobbies & interests'];
+
 export function BlogPosts() {
   let allBlogs = getBlogPosts();
-
-  allBlogs = allBlogs.map((post) => {
-    post.metadata.title = post.metadata.title;
-    return post;
-  });
 
   const blogsByType: { [key: string]: typeof allBlogs } = allBlogs.reduce(
     (acc, post) => {
@@ -21,15 +18,33 @@ export function BlogPosts() {
       }
       return acc;
     },
-    {}
+    {} as { [key: string]: typeof allBlogs }
   );
 
+  const orderedTypes = TYPE_ORDER.filter((t) => blogsByType[t]);
+  const remaining = Object.keys(blogsByType).filter((t) => !TYPE_ORDER.includes(t));
+  const allTypes = [...orderedTypes, ...remaining];
+
   return (
-    <div>
-      {Object.keys(blogsByType)
-        .map((type) => (
+    <div className='space-y-14'>
+      {allTypes.map((type) => {
+        const isProfessional = type === 'professional';
+        return (
           <div key={type}>
-            <h2 className='text-3xl capitalize font-bold mb-4'>{type}</h2>
+            <div className={`flex items-center gap-3 mb-6 ${isProfessional ? 'border-b border-zinc-500 pb-3' : ''}`}>
+              {isProfessional && (
+                <span className='px-2 py-0.5 text-xs font-semibold uppercase tracking-widest bg-zinc-700 text-zinc-200 rounded'>
+                  Work
+                </span>
+              )}
+              <h2
+                className={`capitalize font-bold ${
+                  isProfessional ? 'text-4xl text-white' : 'text-3xl text-zinc-400'
+                }`}
+              >
+                {type}
+              </h2>
+            </div>
             <div className='grid grid-flow-row-dense gap-8 mx-auto grid-cols-1 sm:grid-cols-2'>
               {blogsByType[type]
                 .sort((a, b) => {
@@ -45,15 +60,24 @@ export function BlogPosts() {
                     href={`/blog/${post.slug}`}
                   >
                     <Card>
-                      <div className='flex items-center justify-between gap-2'>
-                        <article className='relative w-full h-full p-4 md:p-8'>
+                      <article className='relative w-full h-full'>
+                        <div className='w-full h-40 overflow-hidden bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center'>
+                          {post.metadata.image ? (
+                            <img
+                              src={post.metadata.image}
+                              alt={post.metadata.title}
+                              className='w-full h-full object-cover'
+                            />
+                          ) : (
+                            <div className='w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-900' />
+                          )}
+                        </div>
+                        <div className='p-4 md:p-8'>
                           <div className='flex justify-between gap-2 items-center'>
-                            <span className='text-xs justify-between group-hover:text-black dark:group-hover:text-white group-hover:border-zinc-800 drop-shadow-orange'>
+                            <span className='text-xs group-hover:text-black dark:group-hover:text-white drop-shadow-orange'>
                               {post.metadata.date ? (
                                 <time
-                                  dateTime={new Date(
-                                    post.metadata.date
-                                  ).toISOString()}
+                                  dateTime={new Date(post.metadata.date).toISOString()}
                                 >
                                   {Intl.DateTimeFormat(undefined, {
                                     dateStyle: 'medium',
@@ -63,31 +87,26 @@ export function BlogPosts() {
                                 <span>SOON</span>
                               )}
                             </span>
-                            <div className='flex flex-row gap-3 space-y-1'>
-                              <div>
-                                {post.metadata.current ? 'Current' : ''}
-                              </div>
+                            <div className='flex flex-row gap-3'>
+                              <div>{post.metadata.current ? 'Current' : ''}</div>
                               {post.metadata.star ? '⭐️' : ''}
                             </div>
                           </div>
-                          <h2 className='z-20 text-xl font-medium lg:text-3xl group-hover:text-black dark:group-hover:text-white font-display'>
+                          <h2 className='z-20 mt-2 text-xl font-medium lg:text-3xl group-hover:text-black dark:group-hover:text-white font-display'>
                             {post.metadata.title}
-                            {/* <p className='text-base group-hover:text-zinc-800 dark:group-hover:text-white'>
-                              {post.metadata.type}
-                            </p> */}
                           </h2>
                           <p className='z-20 mt-4 text-sm dark:group-hover:text-white group-hover:text-zinc-800'>
                             {post.metadata.description}
                           </p>
-                        </article>
-                      </div>
+                        </div>
+                      </article>
                     </Card>
                   </Link>
                 ))}
             </div>
           </div>
-        ))
-        .reverse()}
+        );
+      })}
     </div>
   );
 }

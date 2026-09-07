@@ -2,12 +2,6 @@ import Link from 'next/link';
 import Particles from '@/app/components/particles';
 const navigation = [
   { name: 'Projects', href: '/blog' },
-  { name: 'Contact', href: '/contact' },
-  {
-    name: 'Github',
-    href: 'https://github.com/elritz',
-    target: 'blank',
-  },
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/cfirmi/',
@@ -15,7 +9,7 @@ const navigation = [
   },
   {
     name: 'Resume',
-    href: 'https://docs.google.com/document/d/1uJqZW2q1oUYcBP73D3T8cctyWdCmDisV2QFCsKNEZU0/edit?usp=sharing',
+    href: 'https://docs.google.com/document/d/1FG2dIAHsFhA-ndpTCtJct_Mh2Vj7sNhAHKLf_daCg20/edit?usp=sharing',
     target: 'blank',
   },
 ];
@@ -46,18 +40,27 @@ export default function Home() {
             </nav>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <h1 className='-z-10 mt-4 text-8xl dark:text-zinc-200 decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
-              elritz
+              Christian Firmi
             </h1>
             <div className='hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
             <div className='my-16 text-center animate-fade-in'>
               <h2 className='text-md text-zinc-500 dark:text-zinc-200  mx-auto leading-2 md:text-xl md:w-[60%] lg:w-[60%]'>
-                Hi, my name is Christian, I&apos;m a software engineer.
+                I&apos;m a mobile software engineer. My GitHub is{' '}
                 <Link
                   target='_blank'
-                  href='https://barfriends.com/'
+                  href='https://github.com/elritz'
                   className='underline duration-500 hover:text-zinc-300'
                 >
-                  Barfriends
+                  @elritz
+                </Link>
+                . I work with TypeScript and am currently working towards better
+                understanding data structures and Go, and working at{' '}
+                <Link
+                  target='_blank'
+                  href='https://store.goiguide.com/'
+                  className='underline duration-500 hover:text-zinc-300'
+                >
+                  iGuide Planitar
                 </Link>
                 .
               </h2>

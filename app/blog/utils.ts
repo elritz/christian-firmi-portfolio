@@ -11,6 +11,7 @@ export type Metadata = {
   url?: string | undefined
   repo?: string | undefined
   type?: string
+  image?: string
 }
 
 function parseFrontmatter(fileContent: string) {
