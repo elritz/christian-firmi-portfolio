@@ -67,6 +67,7 @@ export function BlogPosts() {
                               src={post.metadata.image}
                               alt={post.metadata.title}
                               className='w-full h-full object-cover'
+                              style={{ objectPosition: post.metadata.imagePosition ?? 'center' }}
                             />
                           ) : (
                             <div className='w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-900' />
