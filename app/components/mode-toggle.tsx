@@ -1,17 +1,24 @@
 'use client';
 
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export function ModeToggle() {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
+  // The theme is only known on the client; render the same icon on both
+  // sides until mounted so hydration matches.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && resolvedTheme === 'dark';
 
   return (
     <button
-      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       className='border rounded-md w-6 h-6 flex items-center justify-center'
     >
       <span className='sr-only'>Toggle mode</span>
-      {theme !== 'dark' ? (
+      {!isDark ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'

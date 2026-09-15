@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { TransitionLink } from '@/app/components/page-transition';
+import { ModeToggle } from '@/app/components/mode-toggle';
 import TrunkBackground from '@/app/components/trunk-background';
 const navigation = [
   { name: 'My Work', href: '/blog' },
@@ -38,6 +39,9 @@ export default function Home() {
                     <p>{item.name}</p>
                   </TransitionLink>
                 ))}
+                <span className='ml-2 flex items-center text-zinc-500 dark:text-zinc-200'>
+                  <ModeToggle />
+                </span>
               </ul>
             </nav>
             <div className='hidden w-full h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
