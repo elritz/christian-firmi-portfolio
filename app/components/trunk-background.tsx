@@ -68,14 +68,22 @@ const CHAOS_INIT = 0.2;
 const CHAOS_DELTA = 0.08;
 const CHAOS_MAG = 22;
 const DIM_INIT = 36;
-// Rings sit tight near the heart and widen toward the bark.
+// Rings sit tight near the heart and the spacing keeps widening toward the bark.
 const RING_GAP_MIN = 7;
-const RING_GAP_MAX = 26;
-// Line thickness always grows outward, in random-sized steps.
-const WIDTH_MIN = 0.7;
-const WIDTH_MAX = 13;
+const RING_GAP_MAX = 34;
+// Line thickness only ever thins outward, in random-sized steps.
+const WIDTH_NEAR = 2.4;
+const WIDTH_FAR = 0.5;
 const STEPS = 360;
 const TWO_PI = Math.PI * 2;
+// Entrance: rings draw on and splash outward from the heart over this long.
+const INTRO_MS = 1300;
+const INTRO_STAGGER = 0.55; // share of the intro spent staggering ring starts
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeOutBack = (t: number) => {
+  const c = 0.9;
+  return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+};
 // Pointer ripple: rings are pushed away from the pointer and relax back.
 const RIPPLE_AMP = 18;
 const RIPPLE_ANGLE = 0.45;
@@ -83,15 +91,15 @@ const RIPPLE_DEPTH = 120;
 
 // Ring colour comes from the --ring-rgb CSS variable; these are the alphas.
 const PALETTE = {
-  dark: { inner: 0.42, outer: 0.11, band: 0.04, rim: 0.2, rimW: 1.6 },
-  light: { inner: 0.36, outer: 0.09, band: 0.04, rim: 0.6, rimW: 1.8 },
+  dark: { inner: 0.42, outer: 0.07, band: 0.04, rim: 0.2, rimW: 1.6 },
+  light: { inner: 0.36, outer: 0.06, band: 0.04, rim: 0.6, rimW: 1.8 },
 };
 // Where the trunk's heart sits, as a fraction of the viewport: just past the top-right corner.
 const ORIGIN = { x: 1.08, y: -0.12 };
 // Light comes from the top-left; the glass rim catches it there.
 const LIGHT_ANGLE = -Math.PI * 0.75;
 
-/** Growth rings: uneven spacing that widens outward, thickness that only ever grows. */
+/** Growth rings: uneven spacing that widens outward, thickness that only ever thins. */
 function ringLayout(reach: number, nearest: number) {
   const radii: number[] = [];
   let radius = DIM_INIT;
@@ -102,7 +110,7 @@ function ringLayout(reach: number, nearest: number) {
       (RING_GAP_MIN + (RING_GAP_MAX - RING_GAP_MIN) * out) *
       (0.6 + 0.9 * noise3(i * 0.37, 9.2, 0.5));
   }
-  // Random positive steps, normalised so the outermost ring lands on WIDTH_MAX.
+  // Random positive steps, normalised so the outermost ring lands on WIDTH_FAR.
   const steps = radii.map((_, i) => 0.35 + 1.3 * noise3(i * 0.61, 41.7, 0.5));
   const total = steps.reduce((a, b) => a + b, 0);
   const bases: number[] = [];
@@ -113,7 +121,7 @@ function ringLayout(reach: number, nearest: number) {
     // Rings that never reach the viewport are skipped.
     if (radii[i] + CHAOS_MAG + RIPPLE_AMP >= nearest) {
       bases.push(radii[i]);
-      widths.push(WIDTH_MIN + (WIDTH_MAX - WIDTH_MIN) * (grown / total));
+      widths.push(WIDTH_NEAR - (WIDTH_NEAR - WIDTH_FAR) * (grown / total));
     }
   }
   return { bases, widths };
@@ -160,6 +168,9 @@ export default function TrunkBackground({ className = '' }: Props) {
     const centre = { x: 0, y: 0 };
     const target = { x: 0, y: 0 };
     const pointer = { x: 0, y: 0, angle: 0, dist: 0, energy: 0 };
+    const introStart = performance.now();
+    let introDone = reduceMotion;
+    let drawFrom = 0; // vertex index facing the viewport; rings sweep in from here
     const prev = new Float32Array(STEPS * 2);
     const cur = new Float32Array(STEPS * 2);
     const cos = new Float32Array(STEPS);
@@ -182,13 +193,26 @@ export default function TrunkBackground({ className = '' }: Props) {
       const reach = Math.hypot(Math.max(hx, w - hx), Math.max(hy, h - hy)) + CHAOS_MAG;
       const nearest = Math.hypot(Math.max(0, -hx, hx - w), Math.max(0, -hy, hy - h));
       ({ bases, widths } = ringLayout(reach, nearest));
+      const toward = Math.atan2(h / 2 - hy, w / 2 - hx);
+      drawFrom = ((Math.round((toward / TWO_PI) * STEPS) % STEPS) + STEPS) % STEPS;
     };
 
-    const traceRing = (pts: Float32Array) => {
+    // Traces the ring; with frac < 1 only the part around drawFrom, sweeping both ways.
+    const traceRing = (pts: Float32Array, frac = 1) => {
       ctx.beginPath();
-      ctx.moveTo(pts[0], pts[1]);
-      for (let a = 1; a < STEPS; a++) ctx.lineTo(pts[a * 2], pts[a * 2 + 1]);
-      ctx.closePath();
+      if (frac >= 1) {
+        ctx.moveTo(pts[0], pts[1]);
+        for (let a = 1; a < STEPS; a++) ctx.lineTo(pts[a * 2], pts[a * 2 + 1]);
+        ctx.closePath();
+        return;
+      }
+      const half = Math.floor((STEPS * frac) / 2);
+      const start = (drawFrom - half + STEPS) % STEPS;
+      ctx.moveTo(pts[start * 2], pts[start * 2 + 1]);
+      for (let k = 1; k <= half * 2; k++) {
+        const a = (start + k) % STEPS;
+        ctx.lineTo(pts[a * 2], pts[a * 2 + 1]);
+      }
     };
 
     const draw = () => {
@@ -209,6 +233,11 @@ export default function TrunkBackground({ className = '' }: Props) {
       }
       const rings = bases.length;
       const ripple = RIPPLE_AMP * pointer.energy;
+      const intro = introDone
+        ? 1
+        : Math.min(1, (performance.now() - introStart) / INTRO_MS);
+      if (intro >= 1) introDone = true;
+      let prevFull = false;
       for (let i = 0; i < rings; i++) {
         const dim = CHAOS_DELTA * i + CHAOS_INIT;
         const base = bases[i];
@@ -216,9 +245,19 @@ export default function TrunkBackground({ className = '' }: Props) {
         // Gaussian falloff so the rings dissolve toward the edges.
         const falloff = Math.exp(-(t * 1.7) * (t * 1.7));
         const alpha = p.outer + (p.inner - p.outer) * falloff;
+        // Entrance: each ring starts a little after the one inside it,
+        // sweeps in from the screen side and splashes out to its radius.
+        let sweep = 1;
+        let scale = 1;
+        if (!introDone) {
+          const local = Math.min(1, Math.max(0, (intro - INTRO_STAGGER * t) / (1 - INTRO_STAGGER)));
+          if (local <= 0) break;
+          sweep = easeOutCubic(local);
+          scale = 0.55 + 0.45 * easeOutBack(local);
+        }
         for (let a = 0; a < STEPS; a++) {
           const n = noise3(ox + cos[a] * dim, oy + sin[a] * dim, oz);
-          let r = base + CHAOS_MAG * n;
+          let r = (base + CHAOS_MAG * n) * scale;
           if (ripple > 0.01) {
             let dA = (a / STEPS) * TWO_PI - pointer.angle;
             dA = Math.atan2(Math.sin(dA), Math.cos(dA));
@@ -233,7 +272,7 @@ export default function TrunkBackground({ className = '' }: Props) {
           cur[a * 2 + 1] = r * sin[a];
         }
         // Glass panes between rings: alternating translucent fills.
-        if (i > 0) {
+        if (i > 0 && sweep >= 1 && prevFull) {
           traceRing(cur);
           ctx.moveTo(prev[0], prev[1]);
           for (let a = STEPS - 1; a > 0; a--) ctx.lineTo(prev[a * 2], prev[a * 2 + 1]);
@@ -243,16 +282,18 @@ export default function TrunkBackground({ className = '' }: Props) {
           ctx.fill('evenodd');
         }
         // The ring edge: a soft lit rim under a thin tinted line.
-        traceRing(cur);
-        ctx.globalAlpha = 0.25 + 0.75 * falloff;
+        traceRing(cur, sweep);
+        ctx.globalAlpha = (0.25 + 0.75 * falloff) * sweep;
         ctx.lineWidth = widths[i] + p.rimW;
         ctx.strokeStyle = rim;
         ctx.stroke();
-        ctx.globalAlpha = 1;
+        ctx.globalAlpha = sweep;
         ctx.lineWidth = widths[i];
         ctx.strokeStyle = `rgba(${tint}, ${alpha.toFixed(3)})`;
         ctx.stroke();
+        ctx.globalAlpha = 1;
         prev.set(cur);
+        prevFull = sweep >= 1;
       }
     };
     redraw.current = draw;
@@ -262,7 +303,7 @@ export default function TrunkBackground({ className = '' }: Props) {
     const tick = () => {
       raf = window.requestAnimationFrame(tick);
       frame++;
-      if (frame % 2) return; // 30fps is plenty for this drift
+      if (introDone && frame % 2) return; // 30fps is plenty for the drift
       oy -= 0.012;
       oz += 0.0012;
       centre.x += (target.x - centre.x) * 0.04;
