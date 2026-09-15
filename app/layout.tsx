@@ -2,7 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ThemeProvider } from '@/app/components/theme-provider';
-import { ModeToggle } from '@/app/components/mode-toggle';
+import { PageTransitionProvider } from '@/app/components/page-transition';
 import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { baseUrl } from './sitemap';
@@ -65,7 +65,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           } selection:bg-orange-500 selection:text-white`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-          <main>{children}</main>
+          <PageTransitionProvider>
+            <main>{children}</main>
+          </PageTransitionProvider>
         </ThemeProvider>
       </body>
     </html>

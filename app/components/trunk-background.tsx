@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
+import { EXIT_MS, usePageTransition } from './page-transition';
 
 // Improved Perlin noise (3D), seeded so the rings look the same on every load.
 const PERM = new Uint8Array(512);
@@ -80,6 +81,7 @@ const TWO_PI = Math.PI * 2;
 const INTRO_MS = 1300;
 const INTRO_STAGGER = 0.55; // share of the intro spent staggering ring starts
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeInCubic = (t: number) => t * t * t;
 const easeOutBack = (t: number) => {
   const c = 0.9;
   return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
@@ -133,15 +135,22 @@ export default function TrunkBackground({ className = '' }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme } = useTheme();
+  const { phase } = usePageTransition();
   const isDark = useRef(false);
-  const tintRef = useRef('28, 92, 66');
+  const tintRef = useRef('28 92 66');
+  const exitAt = useRef<number | null>(null);
   const redraw = useRef<() => void>(() => {});
+
+  // Leaving the page: the rings pull back into the heart.
+  useEffect(() => {
+    exitAt.current = phase === 'exiting' ? performance.now() : null;
+  }, [phase]);
 
   useEffect(() => {
     isDark.current = resolvedTheme === 'dark';
     if (containerRef.current) {
       const v = getComputedStyle(containerRef.current).getPropertyValue('--ring-rgb').trim();
-      if (v) tintRef.current = v;
+      if (v) tintRef.current = v.replace(/,/g, ' ').replace(/\s+/g, ' ');
     }
     redraw.current();
   }, [resolvedTheme]);
@@ -233,10 +242,13 @@ export default function TrunkBackground({ className = '' }: Props) {
       }
       const rings = bases.length;
       const ripple = RIPPLE_AMP * pointer.energy;
-      const intro = introDone
-        ? 1
-        : Math.min(1, (performance.now() - introStart) / INTRO_MS);
+      const now = performance.now();
+      const intro = introDone ? 1 : Math.min(1, (now - introStart) / INTRO_MS);
       if (intro >= 1) introDone = true;
+      const leave =
+        exitAt.current === null
+          ? 0
+          : easeInCubic(Math.min(1, (now - exitAt.current) / EXIT_MS));
       let prevFull = false;
       for (let i = 0; i < rings; i++) {
         const dim = CHAOS_DELTA * i + CHAOS_INIT;
@@ -254,6 +266,13 @@ export default function TrunkBackground({ className = '' }: Props) {
           if (local <= 0) break;
           sweep = easeOutCubic(local);
           scale = 0.55 + 0.45 * easeOutBack(local);
+        }
+        if (leave > 0) {
+          // Outer rings let go first; the intro played in reverse.
+          const local = Math.min(1, Math.max(0, (leave - 0.35 * (1 - t)) / 0.65));
+          sweep *= 1 - local;
+          scale *= 1 - 0.45 * local;
+          if (sweep <= 0.01) continue;
         }
         for (let a = 0; a < STEPS; a++) {
           const n = noise3(ox + cos[a] * dim, oy + sin[a] * dim, oz);
@@ -278,7 +297,7 @@ export default function TrunkBackground({ className = '' }: Props) {
           for (let a = STEPS - 1; a > 0; a--) ctx.lineTo(prev[a * 2], prev[a * 2 + 1]);
           ctx.closePath();
           const pane = p.band * falloff * (i % 2 ? 1 : 0.35);
-          ctx.fillStyle = `rgba(${tint}, ${pane.toFixed(3)})`;
+          ctx.fillStyle = `rgb(${tint} / ${pane.toFixed(3)})`;
           ctx.fill('evenodd');
         }
         // The ring edge: a soft lit rim under a thin tinted line.
@@ -289,7 +308,7 @@ export default function TrunkBackground({ className = '' }: Props) {
         ctx.stroke();
         ctx.globalAlpha = sweep;
         ctx.lineWidth = widths[i];
-        ctx.strokeStyle = `rgba(${tint}, ${alpha.toFixed(3)})`;
+        ctx.strokeStyle = `rgb(${tint} / ${alpha.toFixed(3)})`;
         ctx.stroke();
         ctx.globalAlpha = 1;
         prev.set(cur);
@@ -303,7 +322,7 @@ export default function TrunkBackground({ className = '' }: Props) {
     const tick = () => {
       raf = window.requestAnimationFrame(tick);
       frame++;
-      if (introDone && frame % 2) return; // 30fps is plenty for the drift
+      if (introDone && exitAt.current === null && frame % 2) return; // 30fps for the drift
       oy -= 0.012;
       oz += 0.0012;
       centre.x += (target.x - centre.x) * 0.04;
@@ -354,7 +373,11 @@ export default function TrunkBackground({ className = '' }: Props) {
   }, []);
 
   return (
-    <div ref={containerRef} className={className} aria-hidden='true'>
+    <div
+      ref={containerRef}
+      className={`${className} [--ring-rgb:28_92_66] dark:[--ring-rgb:30_104_70] dark:[--beam-a:rgba(6,32,20,0.5)] dark:[--beam-b:rgba(12,58,38,0.65)]`}
+      aria-hidden='true'
+    >
       <div className='absolute inset-0 overflow-hidden'>
         <div className='trunk-beam trunk-beam-a' />
         <div className='trunk-beam trunk-beam-b' />

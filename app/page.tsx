@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TransitionLink } from '@/app/components/page-transition';
 import TrunkBackground from '@/app/components/trunk-background';
 const navigation = [
   { name: 'My Work', href: '/blog' },
@@ -28,14 +29,14 @@ export default function Home() {
             <nav className='flex justify-center animate-fade-in relative z-50'>
               <ul className='flex align-center justify-center gap-4 z-50'>
                 {navigation.map((item, index) => (
-                  <Link
+                  <TransitionLink
                     key={index}
                     target={item.target}
                     href={item.href}
                     className='text-md dark:text-zinc-200 duration-200 text-zinc-500 hover:text-zinc-900 xs:text-md sm:text-md lg md:text-xl lg:text-xl flex flex-row justify-center items-center'
                   >
                     <p>{item.name}</p>
-                  </Link>
+                  </TransitionLink>
                 ))}
               </ul>
             </nav>
@@ -47,12 +48,12 @@ export default function Home() {
             <div className='mt-10 md:mt-16 text-center animate-fade-in'>
               <h2 className='text-md text-zinc-500 dark:text-zinc-200  mx-auto leading-2 md:text-xl md:w-[80%]'>
                 I&apos;m a{' '}
-                <Link
+                <TransitionLink
                   href='/about'
                   className='font-medium text-zinc-900 underline decoration-orange-500 decoration-2 underline-offset-4 duration-300 hover:text-orange-600 dark:text-white dark:hover:text-orange-400'
                 >
                   software product engineer
-                </Link>{' '}
+                </TransitionLink>{' '}
                 focused on mobile applications, principled in engineering and
                 creative in design. Currently at{' '}
                 <Link

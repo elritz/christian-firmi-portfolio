@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Navigation } from '@/app/components/nav';
+import { TransitionLink } from '@/app/components/page-transition';
 import { baseUrl } from '@/app/sitemap';
 import { Side, Sides, Step, Steps } from './components';
 
@@ -127,13 +128,13 @@ export default function AboutPage() {
           <ul className='mt-4 flex flex-wrap gap-x-8 gap-y-3'>
             {links.map((link) => (
               <li key={link.label}>
-                <Link
+                <TransitionLink
                   href={link.href}
                   target={link.href.startsWith('/') ? undefined : '_blank'}
                   className='font-display text-lg text-zinc-900 underline underline-offset-4 decoration-zinc-300 duration-200 hover:decoration-orange-500 dark:text-zinc-100 dark:decoration-zinc-700 dark:hover:decoration-orange-500'
                 >
                   {link.label}
-                </Link>
+                </TransitionLink>
               </li>
             ))}
           </ul>

@@ -1,6 +1,6 @@
 'use client';
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { TransitionLink } from './page-transition';
 import React, { useEffect, useRef, useState } from 'react';
 import { ModeToggle } from './mode-toggle';
 
@@ -29,21 +29,21 @@ export const Navigation: React.FC = () => {
       >
         <div className='container flex flex-row-reverse items-center justify-between p-6 mx-auto'>
           <div className='flex justify-between gap-8'>
-            <Link
+            <TransitionLink
               href='/blog'
               className='duration-200 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 hover:underline'
             >
               My Work
-            </Link>
+            </TransitionLink>
           </div>
 
           <ModeToggle />
-          <Link
+          <TransitionLink
             href='/'
             className='duration-200 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900'
           >
             <ArrowLeft className='w-6 h-6 ' />
-          </Link>
+          </TransitionLink>
         </div>
       </div>
     </header>
