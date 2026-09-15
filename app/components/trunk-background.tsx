@@ -71,6 +71,9 @@ const DIM_INIT = 36;
 // Rings sit tight near the heart and widen toward the bark.
 const RING_GAP_MIN = 7;
 const RING_GAP_MAX = 26;
+// Line thickness always grows outward, in random-sized steps.
+const WIDTH_MIN = 0.7;
+const WIDTH_MAX = 13;
 const STEPS = 360;
 const TWO_PI = Math.PI * 2;
 // Pointer ripple: rings are pushed away from the pointer and relax back.
@@ -80,33 +83,40 @@ const RIPPLE_DEPTH = 120;
 
 // Ring colour comes from the --ring-rgb CSS variable; these are the alphas.
 const PALETTE = {
-  dark: { inner: 0.42, outer: 0.04, band: 0.04, rim: 0.2, rimW: 1.6 },
-  light: { inner: 0.36, outer: 0.03, band: 0.04, rim: 0.6, rimW: 1.8 },
+  dark: { inner: 0.42, outer: 0.11, band: 0.04, rim: 0.2, rimW: 1.6 },
+  light: { inner: 0.36, outer: 0.09, band: 0.04, rim: 0.6, rimW: 1.8 },
 };
 // Where the trunk's heart sits, as a fraction of the viewport: just past the top-right corner.
 const ORIGIN = { x: 1.08, y: -0.12 };
 // Light comes from the top-left; the glass rim catches it there.
 const LIGHT_ANGLE = -Math.PI * 0.75;
 
-/** Growth rings: uneven spacing that widens outward, and a few thick "latewood" rings. */
+/** Growth rings: uneven spacing that widens outward, thickness that only ever grows. */
 function ringLayout(reach: number, nearest: number) {
-  const gaps: number[] = [];
-  const widths: number[] = [];
+  const radii: number[] = [];
   let radius = DIM_INIT;
   for (let i = 0; radius < reach && i < 160; i++) {
     const out = Math.min(1, radius / reach);
-    const gap =
+    radii.push(radius);
+    radius +=
       (RING_GAP_MIN + (RING_GAP_MAX - RING_GAP_MIN) * out) *
       (0.6 + 0.9 * noise3(i * 0.37, 9.2, 0.5));
-    const thick = noise3(i * 0.61, 41.7, 0.5);
-    // Rings that never reach the viewport are skipped.
-    if (radius + CHAOS_MAG + RIPPLE_AMP >= nearest) {
-      gaps.push(radius);
-      widths.push((0.5 + 2.2 * thick * thick) * (0.6 + 0.9 * out));
-    }
-    radius += gap;
   }
-  return { bases: gaps, widths };
+  // Random positive steps, normalised so the outermost ring lands on WIDTH_MAX.
+  const steps = radii.map((_, i) => 0.35 + 1.3 * noise3(i * 0.61, 41.7, 0.5));
+  const total = steps.reduce((a, b) => a + b, 0);
+  const bases: number[] = [];
+  const widths: number[] = [];
+  let grown = 0;
+  for (let i = 0; i < radii.length; i++) {
+    grown += steps[i];
+    // Rings that never reach the viewport are skipped.
+    if (radii[i] + CHAOS_MAG + RIPPLE_AMP >= nearest) {
+      bases.push(radii[i]);
+      widths.push(WIDTH_MIN + (WIDTH_MAX - WIDTH_MIN) * (grown / total));
+    }
+  }
+  return { bases, widths };
 }
 
 type Props = { className?: string };
