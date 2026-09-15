@@ -78,12 +78,13 @@ const RIPPLE_AMP = 18;
 const RIPPLE_ANGLE = 0.45;
 const RIPPLE_DEPTH = 120;
 
+// Ring colour comes from the --ring-rgb CSS variable; these are the alphas.
 const PALETTE = {
-  dark: { r: 62, g: 150, b: 104, inner: 0.4, outer: 0.04, band: 0.04, rim: 0.2, rimW: 1.6 },
-  light: { r: 28, g: 92, b: 66, inner: 0.36, outer: 0.03, band: 0.04, rim: 0.6, rimW: 1.8 },
+  dark: { inner: 0.42, outer: 0.04, band: 0.04, rim: 0.2, rimW: 1.6 },
+  light: { inner: 0.36, outer: 0.03, band: 0.04, rim: 0.6, rimW: 1.8 },
 };
-// Where the trunk's heart sits, as a fraction of the viewport: just past the right edge, mid-height.
-const ORIGIN = { x: 1.08, y: 0.5 };
+// Where the trunk's heart sits, as a fraction of the viewport: just past the top-right corner.
+const ORIGIN = { x: 1.08, y: -0.12 };
 // Light comes from the top-left; the glass rim catches it there.
 const LIGHT_ANGLE = -Math.PI * 0.75;
 
@@ -115,10 +116,15 @@ export default function TrunkBackground({ className = '' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme } = useTheme();
   const isDark = useRef(false);
+  const tintRef = useRef('28, 92, 66');
   const redraw = useRef<() => void>(() => {});
 
   useEffect(() => {
     isDark.current = resolvedTheme === 'dark';
+    if (containerRef.current) {
+      const v = getComputedStyle(containerRef.current).getPropertyValue('--ring-rgb').trim();
+      if (v) tintRef.current = v;
+    }
     redraw.current();
   }, [resolvedTheme]);
 
@@ -181,7 +187,7 @@ export default function TrunkBackground({ className = '' }: Props) {
       ctx.translate(w * ORIGIN.x + centre.x, h * ORIGIN.y + centre.y);
       ctx.lineJoin = 'round';
       const p = isDark.current ? PALETTE.dark : PALETTE.light;
-      const tint = `${p.r}, ${p.g}, ${p.b}`;
+      const tint = tintRef.current;
       // Rim light: bright on the lit side, fading to nothing on the far side.
       let rim: CanvasGradient | string = `rgba(255, 255, 255, ${p.rim * 0.5})`;
       if (typeof ctx.createConicGradient === 'function') {

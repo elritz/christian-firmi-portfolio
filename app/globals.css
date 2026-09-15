@@ -170,12 +170,15 @@ th {
 
 /* Homepage background: diagonal light beams (Raycast-style) under the tree rings. */
 :root {
-  --beam-a: rgba(146, 200, 170, 0.6);
-  --beam-b: rgba(86, 158, 122, 0.8);
+  /* Ring line colour as "r, g, b" so the canvas can read it. */
+  --ring-rgb: 28, 92, 66;
+  --beam-a: rgba(214, 234, 222, 0.55);
+  --beam-b: rgba(184, 218, 198, 0.7);
 }
 .dark {
-  --beam-a: rgba(10, 56, 38, 0.6);
-  --beam-b: rgba(22, 96, 64, 0.85);
+  --ring-rgb: 70, 160, 110;
+  --beam-a: rgba(12, 52, 36, 0.4);
+  --beam-b: rgba(24, 92, 62, 0.6);
 }
 
 .trunk-beam {
@@ -192,7 +195,7 @@ th {
     var(--beam-a) 72%,
     transparent 100%
   );
-  filter: blur(28px);
+  filter: blur(36px);
   will-change: transform;
   transform: translate(-50%, -50%) rotate(-32deg);
 }
