@@ -167,3 +167,67 @@ th {
 .title {
   text-wrap: balance;
 }
+
+/* Homepage background: diagonal light beams (Raycast-style) under the tree rings. */
+:root {
+  --beam-a: rgba(146, 200, 170, 0.6);
+  --beam-b: rgba(86, 158, 122, 0.8);
+}
+.dark {
+  --beam-a: rgba(10, 56, 38, 0.6);
+  --beam-b: rgba(22, 96, 64, 0.85);
+}
+
+.trunk-beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 170vmax;
+  height: 30vmax;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--beam-a) 28%,
+    var(--beam-b) 50%,
+    var(--beam-a) 72%,
+    transparent 100%
+  );
+  filter: blur(28px);
+  will-change: transform;
+  transform: translate(-50%, -50%) rotate(-32deg);
+}
+.trunk-beam-static {
+  top: 20%;
+  height: 18vmax;
+  opacity: 0.55;
+}
+.trunk-beam-b {
+  height: 14vmax;
+  opacity: 0.8;
+  transform: translate(-50%, -50%) rotate(-32deg) translateY(28vmax);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trunk-beam-a {
+    animation: trunk-beam-a 26s ease-in-out infinite alternate;
+  }
+  .trunk-beam-b {
+    animation: trunk-beam-b 34s ease-in-out infinite alternate;
+  }
+}
+@keyframes trunk-beam-a {
+  from {
+    transform: translate(-56%, -50%) rotate(-34deg);
+  }
+  to {
+    transform: translate(-44%, -50%) rotate(-29deg);
+  }
+}
+@keyframes trunk-beam-b {
+  from {
+    transform: translate(-46%, -50%) rotate(-30deg) translateY(30vmax);
+  }
+  to {
+    transform: translate(-54%, -50%) rotate(-35deg) translateY(22vmax);
+  }
+}

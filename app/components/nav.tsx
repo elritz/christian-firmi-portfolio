@@ -33,7 +33,7 @@ export const Navigation: React.FC = () => {
               href='/blog'
               className='duration-200 text-zinc-600 dark:text-zinc-200 hover:text-zinc-900 hover:underline'
             >
-              Projects
+              My Work
             </Link>
           </div>
 

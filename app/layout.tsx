@@ -54,6 +54,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang='en'
+      suppressHydrationWarning
       className={
         (cx('text-black bg-white dark:text-white dark:bg-black'),
           [inter.variable, calSans.variable].join(' '))

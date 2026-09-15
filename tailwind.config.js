@@ -7,7 +7,11 @@ module.exports = {
   ],
   darkMode: ['class'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['var(--font-calsans)', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [
     function ({ addComponents }) {

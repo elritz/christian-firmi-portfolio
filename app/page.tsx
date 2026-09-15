@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import Particles from '@/app/components/particles';
+import TrunkBackground from '@/app/components/trunk-background';
 const navigation = [
-  { name: 'Projects', href: '/blog' },
+  { name: 'My Work', href: '/blog' },
   {
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/cfirmi/',
+    href: 'https://www.linkedin.com/in/christianfirmi/',
     target: 'blank',
   },
   {
@@ -17,13 +17,14 @@ const navigation = [
 export default function Home() {
   return (
     <div className='dark:prose-invert'>
-      <div className='flex flex-col items-center justify-center overflow-x-hidden bg-gradient-to-tl from-white dark:from-zinc-700 via-zinc-600/20 to-slate-200'>
-        <Particles
-          className='absolute inset-0 -z-10 animate-fade-in'
-          quantity={100}
-        />
-        <div className='h-screen flex  items-center justify-center w-screen'>
-          <div className='flex-1 py-11 flex-col'>
+      <div className='relative isolate flex flex-col items-center justify-center overflow-x-hidden bg-[#f5f6f2] dark:bg-[#040705]'>
+        <TrunkBackground className='absolute inset-0' />
+        <div className='relative h-screen flex items-center justify-center w-screen px-4 sm:px-8'>
+          <div
+            aria-hidden='true'
+            className='pointer-events-none absolute left-1/2 top-1/2 h-[70vh] w-[min(110vw,64rem)] -translate-x-1/2 -translate-y-1/2 bg-white/25 backdrop-blur-md [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_72%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_72%)] dark:bg-black/25'
+          />
+          <div className='relative w-full max-w-4xl py-11'>
             <nav className='flex justify-center animate-fade-in relative z-50'>
               <ul className='flex align-center justify-center gap-4 z-50'>
                 {navigation.map((item, index) => (
@@ -38,29 +39,36 @@ export default function Home() {
                 ))}
               </ul>
             </nav>
-            <div className='hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
-            <h1 className='-z-10 mt-4 text-8xl dark:text-zinc-200 decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
+            <div className='hidden w-full h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
+            <h1 className='mt-4 text-5xl sm:text-7xl md:text-8xl dark:text-zinc-200 decoration-orange-500 text-transparent duration-1000 bg-black cursor-default text-edge-outline animate-title font-display  whitespace-nowrap bg-clip-text text-center'>
               Christian Firmi
             </h1>
-            <div className='hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
-            <div className='my-16 text-center animate-fade-in'>
-              <h2 className='text-md text-zinc-500 dark:text-zinc-200  mx-auto leading-2 md:text-xl md:w-[60%] lg:w-[60%]'>
-                I&apos;m a mobile software engineer. My GitHub is{' '}
+            <div className='hidden w-full h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0' />
+            <div className='mt-10 md:mt-16 text-center animate-fade-in'>
+              <h2 className='text-md text-zinc-500 dark:text-zinc-200  mx-auto leading-2 md:text-xl md:w-[80%]'>
+                I&apos;m a{' '}
                 <Link
-                  target='_blank'
-                  href='https://github.com/elritz'
-                  className='underline duration-500 hover:text-zinc-300'
+                  href='/about'
+                  className='font-medium text-zinc-900 underline decoration-orange-500 decoration-2 underline-offset-4 duration-300 hover:text-orange-600 dark:text-white dark:hover:text-orange-400'
                 >
-                  @elritz
-                </Link>
-                . I work with TypeScript and am currently working towards better
-                understanding data structures and Go, and working at{' '}
+                  software product engineer
+                </Link>{' '}
+                focused on mobile applications, principled in engineering and
+                creative in design. Currently at{' '}
                 <Link
                   target='_blank'
                   href='https://store.goiguide.com/'
                   className='underline duration-500 hover:text-zinc-300'
                 >
                   iGuide Planitar
+                </Link>
+                , coding as{' '}
+                <Link
+                  target='_blank'
+                  href='https://github.com/elritz'
+                  className='underline duration-500 hover:text-zinc-300'
+                >
+                  @elritz
                 </Link>
                 .
               </h2>
