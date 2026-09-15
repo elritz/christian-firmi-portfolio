@@ -13,6 +13,17 @@ export type Metadata = {
   type?: string
   image?: string
   imagePosition?: string
+  /** Brand colour, e.g. '#ff7000'. The post header paints a band in it, like the product's own site. */
+  brand?: string
+  /** Optional second gradient stop for the band; defaults to brand. */
+  brandEnd?: string
+  /** Optional image shown beside the title on a branded header. */
+  heroImage?: string
+  /** Sub-tag slugs from app/blog/tags.ts, written as `tags: react-native, graphql`. */
+  tags?: string[]
+  /** Store listings; the post header links to them. */
+  appStore?: string
+  playStore?: string
 }
 
 function parseFrontmatter(fileContent: string) {
@@ -30,6 +41,12 @@ function parseFrontmatter(fileContent: string) {
     let trimmedKey = key.trim() as keyof Metadata
     if (trimmedKey === 'published' || trimmedKey === 'current') {
       metadata[trimmedKey] = value === 'true' as any
+    } else if (trimmedKey === 'tags') {
+      metadata.tags = value
+        .replace(/^\[|\]$/g, '')
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean)
     } else {
       metadata[trimmedKey] = value as any
     }

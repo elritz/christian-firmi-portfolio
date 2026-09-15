@@ -1,49 +1,90 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import {
+  TAG_GROUPS,
+  hasTag,
+  isTagGroupId,
+  tagGroup,
+  tagLabel,
+  type TagGroupId,
+} from '@/app/blog/tags';
+import { DEFAULT_TAB, TABS, type Tab } from './work-tabs-config';
 import { PostCard, type PostSummary } from './post-card';
 
-type Section = { type: string; title?: string };
-type Tab = { id: string; label: string; short?: string; sections: Section[] };
+/** A tag filter: a top-level group, optionally narrowed to one of its sub-tags. */
+type Filter = { group: TagGroupId | null; tag: string | null };
+const NO_FILTER: Filter = { group: null, tag: null };
 
-const TABS: Tab[] = [
-  {
-    id: 'professional',
-    label: 'Professional',
-    sections: [{ type: 'professional' }, { type: 'blog', title: 'Philosophy' }],
-  },
-  {
-    id: 'products',
-    label: 'My Products',
-    sections: [{ type: 'projects' }],
-  },
-  {
-    id: 'hobbies',
-    label: 'Hobbies and Interests',
-    short: 'Hobbies',
-    sections: [{ type: 'hobbies & interests' }, { type: 'travel', title: 'Travel' }],
-  },
-];
-const DEFAULT_TAB = 'products';
+function filterFromSlug(slug: string | undefined): Filter {
+  if (!slug) return NO_FILTER;
+  if (isTagGroupId(slug)) return { group: slug, tag: null };
+  const group = tagGroup(slug);
+  return group ? { group, tag: slug } : NO_FILTER;
+}
 
 function byDateDesc(a: PostSummary, b: PostSummary) {
   return new Date(a.metadata.date) > new Date(b.metadata.date) ? -1 : 1;
 }
 
+const focusRing =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900';
+const pillOn =
+  'border-zinc-900 bg-zinc-900 text-white shadow-[0_6px_20px_-8px_rgba(0,0,0,0.6)] dark:border-white dark:bg-white dark:text-zinc-900';
+const pillOff =
+  'border-zinc-300/80 bg-white/40 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900 dark:border-white/15 dark:bg-zinc-900/40 dark:text-zinc-300 dark:hover:border-white/50 dark:hover:text-white';
+
 export function WorkTabs({ posts }: { posts: PostSummary[] }) {
   const [active, setActive] = useState(DEFAULT_TAB);
+  const [filter, setFilter] = useState<Filter>(NO_FILTER);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Restore the tab from the URL hash so "back" from a post lands where you left.
+  // Restore tab and tag filter from the URL hash ("#tab/tag") so "back" from a
+  // post lands where you left, and post pages can deep-link to a filtered view.
   useEffect(() => {
-    const fromHash = window.location.hash.replace('#', '');
-    if (TABS.some((t) => t.id === fromHash)) setActive(fromHash);
+    const apply = () => {
+      const [tab, slug] = window.location.hash.replace('#', '').split('/');
+      if (TABS.some((t) => t.id === tab)) setActive(tab);
+      setFilter(filterFromSlug(slug));
+    };
+    apply();
+    window.addEventListener('hashchange', apply);
+    return () => window.removeEventListener('hashchange', apply);
   }, []);
 
-  const select = (id: string) => {
-    setActive(id);
-    window.history.replaceState(null, '', id === DEFAULT_TAB ? ' ' : `#${id}`);
+  const commit = (tab: string, next: Filter) => {
+    setActive(tab);
+    setFilter(next);
+    const slug = next.tag ?? next.group;
+    const hash = slug ? `${tab}/${slug}` : tab === DEFAULT_TAB ? '' : tab;
+    window.history.replaceState(null, '', hash ? `#${hash}` : ' ');
   };
+
+  const byType = posts.reduce<Record<string, PostSummary[]>>((acc, post) => {
+    const type = post.metadata.type ?? 'projects';
+    (acc[type] ||= []).push(post);
+    return acc;
+  }, {});
+  const known = new Set(TABS.flatMap((t) => t.sections.map((s) => s.type)));
+  const extra = Object.keys(byType)
+    .filter((t) => !known.has(t))
+    .map((t) => ({ type: t, title: t }));
+  const sectionsFor = (tab: Tab) =>
+    tab.id === DEFAULT_TAB ? [...tab.sections, ...extra] : tab.sections;
+  const postsIn = (tab: Tab) => sectionsFor(tab).flatMap((s) => byType[s.type] ?? []);
+
+  const select = (id: string) => {
+    const tab = TABS.find((t) => t.id === id)!;
+    // Keep the group across tabs; keep the sub-tag only where it still matches something.
+    const keepTag =
+      filter.tag !== null && postsIn(tab).some((p) => hasTag(p.metadata.tags, filter.tag!));
+    commit(id, keepTag ? filter : { group: filter.group, tag: null });
+  };
+  const toggleGroup = (group: TagGroupId) =>
+    commit(active, filter.group === group ? NO_FILTER : { group, tag: null });
+  const toggleTag = (tag: string) =>
+    commit(active, { group: filter.group, tag: filter.tag === tag ? null : tag });
 
   const onKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -54,15 +95,15 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
     tabRefs.current[next]?.focus();
   };
 
-  const byType = posts.reduce<Record<string, PostSummary[]>>((acc, post) => {
-    const type = post.metadata.type ?? 'projects';
-    (acc[type] ||= []).push(post);
-    return acc;
-  }, {});
-  const known = new Set(TABS.flatMap((t) => t.sections.map((s) => s.type)));
-  const extra: Section[] = Object.keys(byType)
-    .filter((t) => !known.has(t))
-    .map((t) => ({ type: t, title: t }));
+  const activeTab = TABS.find((t) => t.id === active) ?? TABS[0];
+  const activeGroup = TAG_GROUPS.find((g) => g.id === filter.group);
+  // Only offer sub-tags that hit at least one post in the open tab, so no filter is dead.
+  const present = new Set(postsIn(activeTab).flatMap((p) => p.metadata.tags ?? []));
+  const subTags = activeGroup
+    ? Object.keys(activeGroup.tags).filter((t) => present.has(t))
+    : [];
+  const activeSlug = filter.tag ?? filter.group;
+  const matches = (p: PostSummary) => !activeSlug || hasTag(p.metadata.tags, activeSlug);
 
   return (
     <div>
@@ -87,7 +128,7 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => select(tab.id)}
                 onKeyDown={(e) => onKeyDown(e, i)}
-                className={`flex-1 whitespace-nowrap rounded-full px-3 py-2 font-display text-sm sm:flex-none sm:px-5 sm:text-base duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900 ${
+                className={`flex-1 whitespace-nowrap rounded-full px-3 py-2 font-display text-sm sm:flex-none sm:px-5 sm:text-base duration-200 ${focusRing} ${
                   selected
                     ? 'bg-orange-500 text-white shadow-[0_6px_20px_-6px_rgba(249,115,22,0.8)]'
                     : 'text-zinc-600 hover:bg-white/50 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white'
@@ -107,9 +148,74 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
         </div>
       </div>
 
+      <div className='mt-6 flex flex-col items-center'>
+        <div role='group' aria-label='Filter by tag' className='flex flex-wrap justify-center gap-2'>
+          {TAG_GROUPS.map((group) => {
+            const on = filter.group === group.id;
+            return (
+              <button
+                key={group.id}
+                type='button'
+                aria-pressed={on}
+                onClick={() => toggleGroup(group.id)}
+                className={`rounded-full border px-4 py-1.5 font-display text-sm duration-200 ${focusRing} ${
+                  on ? pillOn : pillOff
+                }`}
+              >
+                {group.label}
+              </button>
+            );
+          })}
+        </div>
+        <AnimatePresence initial={false}>
+          {activeGroup && (
+            <motion.div
+              key='subtags'
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className='w-full overflow-hidden'
+            >
+              <div
+                role='group'
+                aria-label={`${activeGroup.label} tags`}
+                className='flex flex-wrap justify-center gap-2 pt-3'
+              >
+                {subTags.map((tag) => {
+                  const on = filter.tag === tag;
+                  return (
+                    <button
+                      key={tag}
+                      type='button'
+                      aria-pressed={on}
+                      onClick={() => toggleTag(tag)}
+                      className={`rounded-full border px-3 py-1 text-xs duration-200 ${focusRing} ${
+                        on ? pillOn : pillOff
+                      }`}
+                    >
+                      {tagLabel(tag)}
+                    </button>
+                  );
+                })}
+                {subTags.length === 0 && (
+                  <span className='text-sm text-zinc-500 dark:text-zinc-400'>
+                    Nothing {activeGroup.label.toLowerCase()} in this tab.
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {TABS.map((tab) => {
-        const sections = tab.id === DEFAULT_TAB ? [...tab.sections, ...extra] : tab.sections;
-        const visible = sections.filter((s) => byType[s.type]?.length);
+        const visible = sectionsFor(tab)
+          .map((s) => ({
+            ...s,
+            posts: (byType[s.type] ?? []).filter(matches).sort(byDateDesc),
+          }))
+          .filter((s) => s.posts.length);
         return (
           <div
             key={tab.id}
@@ -120,7 +226,9 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
             className='pt-10 space-y-14'
           >
             {visible.length === 0 && (
-              <p className='text-zinc-500 dark:text-zinc-400'>Nothing here yet.</p>
+              <p className='text-zinc-500 dark:text-zinc-400'>
+                {activeSlug ? `Nothing tagged ${tagLabel(activeSlug)} here.` : 'Nothing here yet.'}
+              </p>
             )}
             {visible.map((section) => (
               <section key={section.type}>
@@ -130,7 +238,7 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
                   </h2>
                 )}
                 <div className='grid grid-flow-row-dense gap-8 mx-auto grid-cols-1 sm:grid-cols-2'>
-                  {[...byType[section.type]].sort(byDateDesc).map((post) => (
+                  {section.posts.map((post) => (
                     <PostCard key={post.slug} post={post} />
                   ))}
                 </div>

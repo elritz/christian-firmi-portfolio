@@ -3,6 +3,18 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
 import React from 'react';
+import { FigmaEmbed } from './figma-embed';
+import {
+  EmojiMoods,
+  Highlight,
+  Highlights,
+  JoinCounts,
+  Screen,
+  Screens,
+  Stack,
+  StackGroup,
+} from './post-blocks';
+import { IvyWireframe } from './ivy-wireframe';
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -94,6 +106,16 @@ let components = {
   // h5: createHeading(5),
   // h6: createHeading(6),
   Image: RoundedImage,
+  FigmaEmbed,
+  IvyWireframe,
+  Highlights,
+  Highlight,
+  EmojiMoods,
+  JoinCounts,
+  Screens,
+  Screen,
+  Stack,
+  StackGroup,
   a: CustomLink,
   code: Code,
   Table,
@@ -156,10 +178,14 @@ let components = {
 
 export function CustomMDX(props) {
   return (
-    <div className='prose mx-auto'>
+    <div className='prose mx-auto px-5 md:px-0 dark:prose-invert'>
       {/* @ts-expect-error Server Component */}
       <MDXRemote
         {...props}
+        // next-mdx-remote 6 strips JSX expressions (e.g. style={{ ... }}) by
+        // default. Posts are authored in this repo, so allow them; the
+        // dangerous-call guard (blockDangerousJS) stays on.
+        options={{ blockJS: false, ...(props.options || {}) }}
         components={{ ...components, ...(props.components || {}) }}
       />
     </div>

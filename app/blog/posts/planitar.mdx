@@ -1,9 +1,12 @@
 ---
 type: professional
+tags: react-native, native-mobile, employment, documentation, leadership, product-design
 title: Planitar (iGuide)
 description: 'iGuide — immersive property visualization and measurement platform offering 3D tours, accurate floor plans, and detailed spatial data for real estate and property management.'
 date: 2025-11-04
 url: https://store.goiguide.com/
+appStore: https://apps.apple.com/ca/app/iguide-planix/id6450938233
+playStore: https://play.google.com/store/apps/details?id=com.planitar.iguide&hl=en_CA
 published: true
 current: true
 image: /planitar/banner.png
@@ -25,6 +28,10 @@ image: /planitar/banner.png
 - Feature development
   - Authentication
   - iOS Mobile Capture
+  - Cone of perception on the 2D map, showing where the active scan is looking
+  - Scan number markers on the map and the interaction to jump between scans
+  - Tags during capture, including tag creation
+  - Settings, including the capture guidance controls
   - Firebase remote config
   - Sentry and Heap analytics
   - templating
@@ -32,6 +39,16 @@ image: /planitar/banner.png
   - Android edge to edge
   - Migrated to Redux for state management
   - Brought React Navigation standards to navigation heiarchy
+
+#### LiDAR capture
+
+Capture on iOS runs on ARKit. I built the native modules that feed depth from the phone's LiDAR into the proprietary measurement library, so a survey draws its floor plan while you walk the room.
+
+<img
+  src='/planitar/lidar-capture.png'
+  alt='LiDAR capture: a phone sweeping a room, the point cloud landing on the walls, and a floor plan forming'
+  style={{ width: '55%', margin: '0 auto', borderRadius: '12px', display: 'block' }}
+/>
 
 #### Cameras
 
@@ -48,26 +65,41 @@ image: /planitar/banner.png
   <img src='/planitar/planix-pro.png' alt='camera pro' width='225' />
 </div>
 
+#### Theta plugin work
+
+I also worked on the RICOH THETA plugin side, the software that runs on the 360 camera itself and pairs it with the app.
+
 #### Camera UI design
 
-I decided to create the designs and share with my team and designer and explain the navigation system, data and features for the camera system
+I redesigned the camera screens: the navigation, the data shown during capture, and the capture features. This is a proposal I drew and shared with the team and our designer, not the shipping UI.
 
 ![rico theta 360 camera](/planitar/rico-theta.png)
 
 #### Mobile Design
 
-I recreated the application with a modern touch. I investigated the current design which gave me deeper comparison. Through making these designs I understand the current user story abd  where there is room for better user experiences. 
+**A note on what you're looking at.** The screens below are a first draft I started on my own initiative, not the app as it ships today. When I join a company I learn the product, then redraw it as a way to collect my ideas, simplify what I see, and pin down what I think the app should focus on. Nobody asked for it; it is how I get my thinking out early, before I know the codebase well enough to be told what is hard. The current iGUIDE PLANIX app is on the [App Store](https://apps.apple.com/ca/app/iguide-planix/id6450938233) and [Google Play](https://play.google.com/store/apps/details?id=com.planitar.iguide&hl=en_CA); screenshots of it are below so the two can be compared.
 
-I really liked doing this first because its about interpreting my understand of standardaized design practices.Porjects are not without short commings but before looking at the code its exciting process to show enthusiasm, creativity, understanding, reasoning and practicallity. 
+##### The app today
 
-Next I walk through how to go from current designs, its a interesting practice because design language can be established at this point. 
+Screenshots of the shipping iGUIDE PLANIX app, taken on my phone at the time of writing. Several of these features are mine: the cone of perception on the 2D map, the numbered scan markers and the interaction around them, tags and tag creation during capture, and the settings page.
 
-You understand the application for what a user sees it as.  
+<Screens>
+  <Screen src="/planitar/current/devices.webp" caption="Devices: paired cameras and phone LiDAR" />
+  <Screen src="/planitar/current/projects.webp" caption="Projects: saved, queued, and uploaded" />
+  <Screen src="/planitar/current/settings.webp" caption="Settings, which I built" />
+  <Screen src="/planitar/current/survey.webp" caption="Survey: capture with the live floor plan and the tag control" />
+  <Screen src="/planitar/current/survey-scans.webp" caption="Survey: my scan number markers and cone of perception on the map" />
+  <Screen src="/planitar/current/capture-guidance.webp" caption="Capture guidance settings, which I built" />
+</Screens>
 
-![mobile app](/planitar/banner.png)
+##### My redesign
 
-![mobile app](/planitar/home-nav.png)
+Same product, redrawn as a first pass. I started from the current design so I understood the user story and where the experience had room to improve, then worked to simplify and target it. Doing this before reading the code is a way to show enthusiasm, creativity, and reasoning about the product as a user sees it, and it is where a design language can be set. The navigation, project list, and device flows below are proposals, not finished work.
 
-![mobile app](/planitar/project.png)
+![Redesign: home and project list](/planitar/banner.png)
 
-![mobile app](/planitar/devices.png)
+![Redesign: home navigation, project list, and settings](/planitar/home-nav.png)
+
+![Redesign: project detail](/planitar/project.png)
+
+![Redesign: devices](/planitar/devices.png)

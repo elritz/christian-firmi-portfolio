@@ -50,7 +50,7 @@ html {
   @apply visible;
 }
 
-.prose a {
+.prose a:not(.not-prose *) {
   @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
 }
 
@@ -81,40 +81,40 @@ html {
   @apply font-medium;
 }
 
-.prose img {
+.prose img:not(.not-prose *) {
   /* Don't apply styles to next/image */
   @apply m-0;
 }
 
-.prose p {
+.prose p:not(.not-prose *) {
   @apply my-4 text-neutral-800 dark:text-neutral-200;
 }
 
-.prose h1 {
+.prose h1:not(.not-prose *) {
   @apply text-4xl font-medium tracking-tight mt-6 mb-2;
 }
 
-.prose h2 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+.prose h2:not(.not-prose *) {
+  @apply mt-14 mb-4 font-display text-2xl tracking-tight sm:text-3xl;
 }
 
-.prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+.prose h3:not(.not-prose *) {
+  @apply mt-10 mb-3 font-display text-xl tracking-tight;
 }
 
-.prose h4 {
+.prose h4:not(.not-prose *) {
   @apply text-lg font-medium tracking-tight mt-6 mb-2;
 }
 
-.prose strong {
+.prose strong:not(.not-prose *) {
   @apply font-medium;
 }
 
-.prose ul {
+.prose ul:not(.not-prose *) {
   @apply list-disc pl-6;
 }
 
-.prose ol {
+.prose ol:not(.not-prose *) {
   @apply list-decimal pl-6;
 }
 
