@@ -31,7 +31,7 @@ function byDateDesc(a: PostSummary, b: PostSummary) {
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900';
 const pillOn =
-  'border-zinc-900 bg-zinc-900 text-white shadow-[0_6px_20px_-8px_rgba(0,0,0,0.6)] dark:border-white dark:bg-white dark:text-zinc-900';
+  'border-zinc-900 bg-zinc-900 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_2px_rgba(0,0,0,0.2)] dark:border-white dark:bg-white dark:text-zinc-900';
 const pillOff =
   'border-zinc-300/80 bg-white/40 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900 dark:border-white/15 dark:bg-zinc-900/40 dark:text-zinc-300 dark:hover:border-white/50 dark:hover:text-white';
 
@@ -111,7 +111,7 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
         <div
           role='tablist'
           aria-label='My work'
-          className='flex w-full flex-nowrap justify-center gap-1 rounded-full border sm:w-auto border-white/60 bg-white/40 p-1.5 shadow-[0_12px_40px_-16px_rgba(6,30,20,0.35)] backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/40 dark:shadow-[0_12px_40px_-16px_rgba(0,0,0,0.8)]'
+          className='flex w-full flex-nowrap justify-center gap-1 rounded-full border sm:w-auto border-zinc-200/80 bg-white/70 p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_6px_16px_-10px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/50 dark:shadow-none'
         >
           {TABS.map((tab, i) => {
             const selected = tab.id === active;
@@ -130,7 +130,7 @@ export function WorkTabs({ posts }: { posts: PostSummary[] }) {
                 onKeyDown={(e) => onKeyDown(e, i)}
                 className={`flex-1 whitespace-nowrap rounded-full px-3 py-2 font-display text-sm sm:flex-none sm:px-5 sm:text-base duration-200 ${focusRing} ${
                   selected
-                    ? 'bg-orange-500 text-white shadow-[0_6px_20px_-6px_rgba(249,115,22,0.8)]'
+                    ? 'bg-orange-500 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_2px_rgba(124,45,18,0.3)]'
                     : 'text-zinc-600 hover:bg-white/50 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white'
                 }`}
               >

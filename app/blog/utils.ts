@@ -21,7 +21,7 @@ export type Metadata = {
   heroImage?: string
   /** Sub-tag slugs from app/blog/tags.ts, written as `tags: react-native, graphql`. */
   tags?: string[]
-  /** Store listings; the post header links to them. */
+  /** Store listings; the post header links to them. Write `soon` for one that isn't live yet. */
   appStore?: string
   playStore?: string
 }

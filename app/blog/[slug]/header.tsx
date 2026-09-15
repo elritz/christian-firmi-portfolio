@@ -26,7 +26,8 @@ export const Header: React.FC<Props> = ({ post }) => {
   const branded = Boolean(brand);
   const showHero = branded && Boolean(heroImage);
 
-  const links: { label: string; href: string }[] = [];
+  // `soon` marks a store listing that isn't live yet: shown as a label, not a link.
+  const links: { label: string; href: string; soon?: boolean }[] = [];
   if (post.metadata.repo) {
     links.push({
       label: 'GitHub',
@@ -39,11 +40,14 @@ export const Header: React.FC<Props> = ({ post }) => {
       href: post.metadata.url,
     });
   }
+  const isSoon = (v: string) => v.trim().toLowerCase() === 'soon';
   if (post.metadata.appStore) {
-    links.push({ label: 'App Store', href: post.metadata.appStore });
+    const soon = isSoon(post.metadata.appStore);
+    links.push({ label: 'App Store', href: soon ? '' : post.metadata.appStore, soon });
   }
   if (post.metadata.playStore) {
-    links.push({ label: 'Google Play', href: post.metadata.playStore });
+    const soon = isSoon(post.metadata.playStore);
+    links.push({ label: 'Google Play', href: soon ? '' : post.metadata.playStore, soon });
   }
   useEffect(() => {
     if (!ref.current) return;
@@ -164,11 +168,20 @@ export const Header: React.FC<Props> = ({ post }) => {
                 showHero ? 'md:justify-start' : ''
               } ${branded ? 'text-white' : 'text-zinc-900 dark:text-white'}`}
             >
-              {links.map((link) => (
-                <Link target='_blank' key={link.label} href={link.href}>
-                  {link.label} <span aria-hidden='true'>&rarr;</span>
-                </Link>
-              ))}
+              {links.map((link) =>
+                link.soon ? (
+                  <span key={link.label} className='cursor-default opacity-60'>
+                    {link.label}{' '}
+                    <span className='ml-1 rounded-full border border-current px-2 py-0.5 text-xs font-medium'>
+                      Coming soon
+                    </span>
+                  </span>
+                ) : (
+                  <Link target='_blank' key={link.label} href={link.href}>
+                    {link.label} <span aria-hidden='true'>&rarr;</span>
+                  </Link>
+                )
+              )}
             </div>
           </div>
           {showHero && (

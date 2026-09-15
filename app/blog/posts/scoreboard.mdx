@@ -5,6 +5,8 @@ title: Scoreboard
 description: Live scoring, refereeing, and YouTube streaming for racquet sports. Score a match from your phone, share a code or QR, and let your club follow along in real time.
 date: 2026-08-15
 url: https://thescoreboard-web.com
+appStore: https://apps.apple.com/us/app/scoreboard/id6744126072
+playStore: soon
 published: true
 current: true
 image: /scoreboard/cover.png
@@ -17,6 +19,29 @@ Scoreboard is a live scoring app for racquet sports: badminton, padel, picklebal
   <Stat value="6 chars" label="Is all a spectator needs to join a live match" />
   <Stat value="0" label="Downloads or accounts needed to watch" />
 </Stats>
+
+<Highlights>
+<Highlight eyebrow="Referee" title="One-tap calls" visual={<ScoreCalls />}>
+
+Let, stroke, no let, fault, appeal, and out are each one tap, with undo and redo always in reach. It works in portrait, or in landscape on a tripod.
+
+</Highlight>
+<Highlight eyebrow="Streaming" title="Live on YouTube" visual={<LiveBroadcast />}>
+
+One switch streams the match to YouTube with the score painted on the broadcast. Live scores for spectators start automatically when you go live.
+
+</Highlight>
+<Highlight eyebrow="Spectators" title="Watch with a code" visual={<JoinCode />}>
+
+Anyone can follow a match with a six-character code or a QR scan from the referee's screen. No account and no download.
+
+</Highlight>
+<Highlight eyebrow="Clubs" title="Your club, notified" visual={<ClubAlert />}>
+
+Clubs get teams, members, and roles for who scores, streams, or watches. Members get a push the moment their club goes live.
+
+</Highlight>
+</Highlights>
 
 ## Referee
 

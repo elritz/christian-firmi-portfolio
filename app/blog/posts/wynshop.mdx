@@ -18,6 +18,29 @@ Wynshop's mobile app is the grocery storefront for more than twenty retailers, e
   <Stat value="4" label="Developers on the team when I joined" />
 </Stats>
 
+<Highlights>
+<Highlight eyebrow="Platform" title="One app, twenty-plus banners" visual={<MultiBanner />}>
+
+One React Native codebase serves more than twenty grocery retailers, each on its own banner with staging and production builds. I wrote the onboarding docs used to stand up new ones.
+
+</Highlight>
+<Highlight eyebrow="Performance" title="Faster lists and storage" visual={<FastList />}>
+
+FlashList replaced FlatList for list rendering and MMKV took over local storage. API caching got smarter and unused dependencies came out.
+
+</Highlight>
+<Highlight eyebrow="Modernization" title="A modern runtime" visual={<Upgrades />}>
+
+I migrated the app to bridgeless React Native, adopted Redux for state, and upgraded React Query from v3 to v5.
+
+</Highlight>
+<Highlight eyebrow="Build" title="Builds in a third of the time" visual={<BuildTime />}>
+
+Moving CI to a Mac Mini and streamlining the scripts took build time from 45 minutes to 15.
+
+</Highlight>
+</Highlights>
+
 ## Role
 
 <Lede>Core mobile team. Stabilize, speed up, and modernize a multi-banner app with global rollouts.</Lede>
