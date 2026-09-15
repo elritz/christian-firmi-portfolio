@@ -58,7 +58,7 @@ export default function Home() {
                 >
                   software product engineer
                 </TransitionLink>{' '}
-                focused on mobile applications, principled in engineering and
+                focused on mobile applications, principled in engineering, and
                 creative in design. Currently at{' '}
                 <Link
                   target='_blank'

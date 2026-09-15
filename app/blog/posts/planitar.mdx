@@ -12,37 +12,38 @@ current: true
 image: /planitar/banner.png
 ---
 
-### Summary
+iGUIDE is a property visualization and measurement platform: 3D tours, accurate floor plans, and spatial data for real estate and property management. I'm on the Data Acquisition team, which owns the PLANIX app that operators use to survey a building.
 
-- Member of the Data Acquisition (DA) team focused on maintaining data collection during surveying.
-- Built native iOS ARKit modules and integrated a proprietary spatial-measurement library to enable accurate interior measurements.
-- Created templating scripts for navigation, components, and icons to accelerate development and enforce consistency.
-- Led company-wide demos and engineering presentations for releases, features, and optimizations; wrote app and brand onboarding documentation.
+## Role
 
-### Tech Stack (selected)
+<Lede>Data Acquisition team. Keep capture working in the field, and make it better.</Lede>
 
-- React Native, Swift, Kotlin, GO, c++
+- Built native iOS ARKit modules and integrated a proprietary spatial-measurement library for accurate interior measurements
+- Created templating scripts for navigation, components, and icons to speed development and keep it consistent
+- Led company-wide demos and engineering presentations for releases, features, and optimizations
+- Wrote the app and brand onboarding documentation
 
-### Key Contributions
+## What I built
 
-- Feature development
-  - Authentication
-  - iOS Mobile Capture
-  - Cone of perception on the 2D map, showing where the active scan is looking
-  - Scan number markers on the map and the interaction to jump between scans
-  - Tags during capture, including tag creation
-  - Settings, including the capture guidance controls
-  - Firebase remote config
-  - Sentry and Heap analytics
-  - templating
-- Modernization
-  - Android edge to edge
-  - Migrated to Redux for state management
-  - Brought React Navigation standards to navigation heiarchy
+<Lede>Features an operator touches on every survey, plus the modernization underneath them.</Lede>
 
-#### LiDAR capture
+### Features
 
-Capture on iOS runs on ARKit. I built the native modules that feed depth from the phone's LiDAR into the proprietary measurement library, so a survey draws its floor plan while you walk the room.
+- Cone of perception on the 2D map, showing where the active scan is looking
+- Scan number markers on the map and the interaction to jump between scans
+- Tags during capture, including tag creation
+- Settings, including the capture guidance controls
+- Authentication, iOS mobile capture, Firebase remote config, Sentry and Heap analytics
+
+### Modernization
+
+- Android edge-to-edge
+- Migrated state management to Redux
+- Brought the navigation hierarchy onto React Navigation standards
+
+## LiDAR capture
+
+<Lede>Capture on iOS runs on ARKit. Depth from the phone's LiDAR feeds the measurement library, so the floor plan draws while you walk the room.</Lede>
 
 <img
   src='/planitar/lidar-capture.png'
@@ -50,38 +51,30 @@ Capture on iOS runs on ARKit. I built the native modules that feed depth from th
   style={{ width: '55%', margin: '0 auto', borderRadius: '12px', display: 'block' }}
 />
 
-#### Cameras
+## Cameras
 
-<div
-  style={{
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '16px',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }}
->
-  <img src='/planitar/planix-r1.png' alt='camera r1' width='200' />
-  <img src='/planitar/planix-pro.png' alt='camera pro' width='225' />
+<Lede>The app drives the PLANIX R1 and PLANIX Pro, and I also worked on the RICOH THETA plugin side, the software that runs on the 360 camera itself.</Lede>
+
+<div style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center', alignItems: 'center' }}>
+  <img src='/planitar/planix-r1.png' alt='PLANIX R1 camera' width='200' />
+  <img src='/planitar/planix-pro.png' alt='PLANIX Pro camera' width='225' />
 </div>
 
-#### Theta plugin work
-
-I also worked on the RICOH THETA plugin side, the software that runs on the 360 camera itself and pairs it with the app.
-
-#### Camera UI design
+### Camera UI redesign
 
 I redesigned the camera screens: the navigation, the data shown during capture, and the capture features. This is a proposal I drew and shared with the team and our designer, not the shipping UI.
 
-![rico theta 360 camera](/planitar/rico-theta.png)
+![Camera UI redesign on a RICOH THETA](/planitar/rico-theta.png)
 
-#### Mobile Design
+## Mobile redesign
 
-**A note on what you're looking at.** The screens below are a first draft I started on my own initiative, not the app as it ships today. When I join a company I learn the product, then redraw it as a way to collect my ideas, simplify what I see, and pin down what I think the app should focus on. Nobody asked for it; it is how I get my thinking out early, before I know the codebase well enough to be told what is hard. The current iGUIDE PLANIX app is on the [App Store](https://apps.apple.com/ca/app/iguide-planix/id6450938233) and [Google Play](https://play.google.com/store/apps/details?id=com.planitar.iguide&hl=en_CA); screenshots of it are below so the two can be compared.
+<Lede>A first draft I started on my own, to collect my ideas and pin down what I think the app should focus on. Not the app as it ships.</Lede>
 
-##### The app today
+When I join a company I learn the product, then redraw it as a way to simplify what I see and get my thinking out early, before I know the codebase well enough to be told what is hard. Nobody asked for it. The current iGUIDE PLANIX app is on the [App Store](https://apps.apple.com/ca/app/iguide-planix/id6450938233) and [Google Play](https://play.google.com/store/apps/details?id=com.planitar.iguide&hl=en_CA); screenshots of it are below so the two can be compared.
 
-Screenshots of the shipping iGUIDE PLANIX app, taken on my phone at the time of writing. Several of these features are mine: the cone of perception on the 2D map, the numbered scan markers and the interaction around them, tags and tag creation during capture, and the settings page.
+### The app today
+
+Screenshots of the shipping app, taken on my phone at the time of writing. Several of these features are mine: the cone of perception on the 2D map, the numbered scan markers and the interaction around them, tags and tag creation during capture, and the settings page.
 
 <Screens>
   <Screen src="/planitar/current/devices.webp" caption="Devices: paired cameras and phone LiDAR" />
@@ -92,9 +85,9 @@ Screenshots of the shipping iGUIDE PLANIX app, taken on my phone at the time of 
   <Screen src="/planitar/current/capture-guidance.webp" caption="Capture guidance settings, which I built" />
 </Screens>
 
-##### My redesign
+### My redesign
 
-Same product, redrawn as a first pass. I started from the current design so I understood the user story and where the experience had room to improve, then worked to simplify and target it. Doing this before reading the code is a way to show enthusiasm, creativity, and reasoning about the product as a user sees it, and it is where a design language can be set. The navigation, project list, and device flows below are proposals, not finished work.
+Same product, redrawn as a first pass. I started from the current design to understand the user story and where the experience had room to improve, then worked to simplify and target it. The navigation, project list, and device flows below are proposals, not finished work.
 
 ![Redesign: home and project list](/planitar/banner.png)
 
@@ -103,3 +96,11 @@ Same product, redrawn as a first pass. I started from the current design so I un
 ![Redesign: project detail](/planitar/project.png)
 
 ![Redesign: devices](/planitar/devices.png)
+
+## Tech stack
+
+<Stack>
+  <StackGroup title="Mobile" items="React Native, TypeScript, Redux, React Navigation" />
+  <StackGroup title="Native" items="Swift, ARKit, Kotlin, C++" />
+  <StackGroup title="Services" items="Go, Firebase, Sentry, Heap" />
+</Stack>

@@ -155,3 +155,28 @@ export function JoinCounts() {
     </div>
   );
 }
+
+/** One-line blurb under a section heading: bigger, lighter, sets up what follows. */
+export function Lede({ children }: { children: React.ReactNode }) {
+  return (
+    <div className='not-prose -mt-1 mb-8 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400 sm:text-xl sm:leading-9 [&_a]:underline [&_a]:decoration-zinc-400 [&_a]:underline-offset-2'>
+      {children}
+    </div>
+  );
+}
+
+/** A row of big numbers with labels, for the facts that should be read at a glance. */
+export function Stats({ children }: { children: React.ReactNode }) {
+  return (
+    <dl className='not-prose my-10 grid grid-cols-2 gap-4 sm:grid-cols-3'>{children}</dl>
+  );
+}
+
+export function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className='rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900'>
+      <dd className='font-display text-3xl text-zinc-900 dark:text-zinc-100 sm:text-4xl'>{value}</dd>
+      <dt className='mt-2 text-sm leading-5 text-zinc-600 dark:text-zinc-400'>{label}</dt>
+    </div>
+  );
+}

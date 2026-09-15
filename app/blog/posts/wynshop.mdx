@@ -10,48 +10,55 @@ current: false
 image: /wynshop/shop_rite_app.png
 ---
 
-### Summary
+Wynshop's mobile app is the grocery storefront for more than twenty retailers, each on its own banner. I joined the core mobile team to make the global React Native app faster and more reliable while shipping new features.
 
-- Member of the core Golden Goose (GG) mobile team. Focus: stabilize and speed up the global React Native app used by 20+ organizations and with multiple banners.
-- Delivered performance, reliability, and build improvements while adding core features.
-- Wrote app and brand onboarding creation documentation.
+<Stats>
+  <Stat value="20+" label="Retail organizations on one React Native app" />
+  <Stat value="45 → 15 min" label="Build time after moving CI to a Mac Mini" />
+  <Stat value="4" label="Developers on the team when I joined" />
+</Stats>
 
-### Role & Scope
+## Role
 
-- Platform: Expo / React Native (bridgeless)
-- Team: 4 developers (on join), global deployments, multi-banner configuration
-- Key features: Made-to-Order, staging/production banners, global rollouts
+<Lede>Core mobile team. Stabilize, speed up, and modernize a multi-banner app with global rollouts.</Lede>
 
-### Key Contributions
+- Platform: Expo and React Native, bridgeless
+- Multi-banner configuration with staging and production banners
+- Key features: Made-to-Order, global rollouts
+- Wrote the app and brand onboarding documentation used to stand up new banners
 
-- Performance
-  - Faster local storage with MMKV
-  - Replaced FlatList with FlashList for better list rendering
-  - Improved API caching and response handling
-  - Removed unused/old node_modules to reduce bloat
-- Modernization
-  - Migrated to bridgeless React Native
-  - Adopted Redux for state management
-  - Utilized React Query Cache (v3 → v5)
-- Build & CI
-  - Moved builds to Mac Mini, cutting build time ~33% (45 → 15 min)
-  - Streamlined build scripts for faster CI
-- Process & Collaboration
-  - Cross-team coordination and documentation for banners and deploys
+## What I shipped
 
-### Tech Stack (selected)
+<Lede>Faster lists and storage, a modern runtime, and a CI pipeline a third of its old length.</Lede>
 
-- Expo, React Native, React, TypeScript
-- GraphQL, Apollo, Prisma, Postgres
-- Node, Express, Docker, AWS, Go
-- Jest, Material UI, Figma
+### Performance
 
-# App
+- Faster local storage with MMKV
+- FlashList in place of FlatList for list rendering
+- Better API caching and response handling
+- Pruned unused dependencies
 
-### Wynshop Partners
+### Modernization
 
-![Wynshop brand](/wynshop/brands.png)
+- Migrated to bridgeless React Native
+- Adopted Redux for state management
+- Upgraded React Query from v3 to v5
 
-### Mobile
+### Build and process
+
+- Moved builds to a Mac Mini and streamlined the scripts
+- Cross-team coordination and documentation for banners and deploys
+
+## The app
+
+![Wynshop brand partners](/wynshop/brands.png)
 
 ![Wynshop app](/wynshop/shop_rite_app.png)
+
+## Tech stack
+
+<Stack>
+  <StackGroup title="Mobile" items="Expo, React Native, React, TypeScript, Redux, React Query" />
+  <StackGroup title="Backend" items="GraphQL, Apollo, Prisma, PostgreSQL, Node, Express, Go" />
+  <StackGroup title="Tooling" items="Docker, AWS, Jest, Material UI, Figma" />
+</Stack>

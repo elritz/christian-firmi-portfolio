@@ -35,6 +35,7 @@ export const TAG_GROUPS: TagGroup[] = [
     id: 'business',
     label: 'Business',
     tags: {
+      'registered-business': 'Registered Business',
       'business-planning': 'Business Planning',
       monetization: 'Monetization',
       'product-design': 'Product Design',

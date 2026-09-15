@@ -13,6 +13,9 @@ import {
   Screens,
   Stack,
   StackGroup,
+  Lede,
+  Stats,
+  Stat,
 } from './post-blocks';
 import { IvyWireframe } from './ivy-wireframe';
 
@@ -116,6 +119,9 @@ let components = {
   Screen,
   Stack,
   StackGroup,
+  Lede,
+  Stats,
+  Stat,
   a: CustomLink,
   code: Code,
   Table,
@@ -178,7 +184,7 @@ let components = {
 
 export function CustomMDX(props) {
   return (
-    <div className='prose mx-auto px-5 md:px-0 dark:prose-invert'>
+    <div className='prose mx-auto px-5 pt-10 md:px-0 md:pt-14 dark:prose-invert'>
       {/* @ts-expect-error Server Component */}
       <MDXRemote
         {...props}

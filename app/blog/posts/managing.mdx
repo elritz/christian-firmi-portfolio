@@ -10,70 +10,29 @@ featured: false
 image: /managing/cover.svg
 ---
 
-A microservice that can be used in a standalone API or federated graphql supergraph. It's used to manage devices and for inter service communication. The encryption
-key never leaves server side.
+A small authorization microservice that runs standalone or inside a federated GraphQL supergraph. It manages devices, the accounts on each device, and service-to-service calls. The encryption key never leaves the server.
 
-### Reflection
+## What it does
 
-Microservices are challenging to manage due to their inherent trade-offs between immediate benefits and long-term maintenance. While they can simplify initial development by isolating functionality and enabling independent team workflows, they often shift complexity rather than reducing it. This became evident as I transitioned from implementing microservices to managing their ongoing operations.
+<Lede>Dual access and refresh tokens, per device, so one phone can hold several accounts and any of them can be signed out remotely.</Lede>
 
-Initially, microservices seemed to offer simplicity and modularity, but managing their interactions revealed significant overhead. Inter-service communication (e.g., API calls, message queues), distributed data consistency, and fault tolerance introduced unexpected complexities. I spent considerable time addressing challenges like versioning, service discovery, network latency, and debugging issues that arise from a distributed architecture.
+- Short-lived access tokens on every request, refresh tokens to renew them without interrupting the session
+- Device-level identity: track active sessions across devices, revoke one, or sign out everywhere when credentials are compromised
+- Profile switching on a single device, with granular sign-out per device or per profile
+- Activity monitoring to flag logins from unfamiliar places
 
-One key realization is that while microservices can streamline development in the short term, they often lead to operational complexity as systems scale. Tools like Kubernetes and Docker are invaluable for orchestration and containerization but come with steep learning curves and demand regular upkeep.
+## What I learned about microservices
 
-Ultimately, I’ve learned that microservices are most effective when aligned with well-defined business domains and supported by teams equipped to manage the added complexity. Without these, the trade-offs can outweigh the benefits, making other architectural patterns more suitable in certain scenarios.
+<Lede>They move complexity around more often than they remove it.</Lede>
 
-### Tech Stack
+Isolating functionality made the first version quick to build and let work happen independently. Operating it was the expensive part: inter-service calls, distributed consistency, versioning, service discovery, and debugging across a network. Kubernetes and Docker help with orchestration, and they bring their own upkeep.
 
-• GraphQL
-• Apollo
-• Prisma
-• Postgres
-• Node
-• Express
-• TypeScript
-• Docker
-• Kubernetes
-• GO
-• AWS
+The pattern earns its cost when it lines up with a real business domain and a team that can carry the operational load. Without both, a simpler architecture usually wins.
 
-### Features
+## Tech stack
 
-Here’s an expanded explanation of each service and its role within the system:
-
-Chat Messaging Service
-
-This service is responsible for enabling real-time communication between users in the application. Its features include:
-• Authorization with Refresh and Access Tokens:
-• Uses access tokens for secure, short-lived authentication of chat requests.
-• Implements refresh tokens to issue new access tokens when the original expires, ensuring uninterrupted user sessions.
-• Tokens are validated for every chat-related action (e.g., sending, receiving, or reading messages) to maintain security.
-• Additional Capabilities:
-• Handles message delivery status (e.g., sent, delivered, read receipts).
-• Implements scalable communication using technologies like WebSockets, Firebase, or SignalR for real-time updates.
-• Provides end-to-end encryption for private messaging to enhance data privacy and security.
-
-Authentication Service
-
-This service handles user identity management and ensures secure access to the application. Its features include:
-• Device and Account Management:
-• Tracks and manages active sessions across multiple devices for a single user account.
-• Provides tools to revoke specific device sessions or enforce logout across all devices in case of compromised credentials.
-• Implements device-level recognition (e.g., using a unique device ID) to enhance security and user experience.
-• Pre-Server Validations:
-• Ensures that user credentials, tokens, or sensitive data are validated locally before being sent to the server, reducing unnecessary network traffic.
-• Can incorporate multi-factor authentication (MFA) for additional security layers.
-
-Profiling Service
-
-This service focuses on account-related functionalities to enhance user control and security. Key features include:
-• Sign Out from All Devices:
-• Allows users to remotely log out from all devices in scenarios such as account recovery or suspected unauthorized access.
-• Clears tokens and invalidates active sessions for all devices connected to the user’s account.
-• Updates the system database to reflect the session changes in real time.
-• Additional Features:
-• Tracks and displays the list of active sessions/devices for user visibility.
-• Supports granular sign-out actions, such as logging out from specific devices while keeping others active.
-• Enables activity monitoring to flag unusual behaviors (e.g., logins from unfamiliar locations).
-
-These services work together to provide a secure, user-friendly, and scalable platform. If you’d like, I can help refine their architecture, suggest specific technologies, or provide implementation ideas for any of these features.
+<Stack>
+  <StackGroup title="API" items="GraphQL, Apollo, Node, Express, TypeScript, Go" />
+  <StackGroup title="Data" items="Prisma, PostgreSQL" />
+  <StackGroup title="Infrastructure" items="Docker, Kubernetes, AWS" />
+</Stack>
