@@ -56,9 +56,18 @@ export function Screen({ src, caption }: { src: string; caption: string }) {
  * a share of the width that matches its shape. On phones they stack full width.
  * Every photo opens full size in a new tab.
  */
-export function Photos({ children }: { children: React.ReactNode }) {
+export function Photos({
+  narrow = false,
+  children,
+}: {
+  /** Keep the row inside the text column, for small photos. */
+  narrow?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <div className='not-prose my-10 flex flex-col gap-6 sm:flex-row sm:gap-4 lg:-mx-24'>
+    <div
+      className={`not-prose my-10 flex flex-col gap-6 sm:flex-row sm:gap-4 ${narrow ? '' : 'lg:-mx-24'}`}
+    >
       {children}
     </div>
   );
@@ -68,11 +77,14 @@ export function Photos({ children }: { children: React.ReactNode }) {
 export function Photo({
   src,
   caption,
+  alt,
   width,
   height,
 }: {
   src: string;
-  caption: string;
+  /** Shown under the photo. Leave it out for no caption, and pass `alt` instead. */
+  caption?: string;
+  alt?: string;
   width: number;
   height: number;
 }) {
@@ -86,16 +98,18 @@ export function Photo({
       >
         <Image
           src={src}
-          alt={caption}
+          alt={alt ?? caption ?? ''}
           width={width}
           height={height}
           sizes='(min-width: 1024px) 840px, 100vw'
           className='h-auto w-full duration-300 hover:scale-[1.02]'
         />
       </a>
-      <figcaption className='mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400'>
-        {caption}
-      </figcaption>
+      {caption && (
+        <figcaption className='mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400'>
+          {caption}
+        </figcaption>
+      )}
     </figure>
   );
 }
