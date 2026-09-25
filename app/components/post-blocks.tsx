@@ -28,6 +28,53 @@ export function Screen({ src, caption }: { src: string; caption: string }) {
   );
 }
 
+/**
+ * A two-up grid of photos, wider than the text column on large screens.
+ * `crop` trims every photo to the same 4:3 tile; without it each keeps its
+ * own shape. Every photo opens full size in a new tab.
+ */
+export function Photos({
+  crop = false,
+  children,
+}: {
+  crop?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      data-crop={crop || undefined}
+      className='group/photos not-prose my-10 grid grid-cols-1 items-start gap-x-4 gap-y-6 sm:grid-cols-2 lg:-mx-24'
+    >
+      {children}
+    </div>
+  );
+}
+
+export function Photo({ src, caption }: { src: string; caption: string }) {
+  return (
+    <figure className='m-0'>
+      <a
+        href={src}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='block overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800'
+      >
+        <Image
+          src={src}
+          alt={caption}
+          width={1200}
+          height={900}
+          sizes='(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw'
+          className='h-auto w-full duration-300 hover:scale-[1.02] group-data-[crop]/photos:aspect-[4/3] group-data-[crop]/photos:object-cover'
+        />
+      </a>
+      <figcaption className='mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400'>
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 /** Tech stack laid out as labelled groups of chips. */
 export function Stack({ children }: { children: React.ReactNode }) {
   return <div className='not-prose my-6 grid gap-6 sm:grid-cols-3'>{children}</div>;
