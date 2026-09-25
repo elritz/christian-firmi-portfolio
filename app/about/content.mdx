@@ -70,6 +70,37 @@ Design isn't decoration laid over the system. It's how the system is understood,
 
 The two sides feed each other. The templating scripts at iGuide exist because I wanted the design system enforced by the tooling, not the reviewer. The camera designs exist so the data model and the navigation could be argued about on the same screen. The good decisions on every project came from holding both at once.
 
+## Design philosophy: the Mom Test
+
+The theory I lean on most comes from Rob Fitzpatrick's [The Mom Test](https://www.momtestbook.com/). The name comes from a simple point: you can't ask your mom whether your idea is good. She loves you, so she'll say yes. Most people will do the same. Ask someone for an opinion about your idea and they'll protect your feelings, so you get compliments, not the truth.
+
+The fix is to stop asking about the idea at all. The book gives three rules:
+
+- **Talk about their life instead of your idea.** What do they do today, and where does it hurt?
+- **Ask about specifics in the past instead of generics or opinions about the future.** "When did this last happen, and what did you do?" beats "Would you use this?"
+- **Talk less and listen more.** The moment I start pitching, the learning stops.
+
+Compliments, hypotheticals, and "I would definitely use that" are bad data. What someone already did, what it cost them, and what they'll commit to now (time, a trial, a pilot, money) is good data.
+
+<Sides>
+<Side title="In design">
+
+It changes the questions I bring to research. I don't show a mockup and ask whether people like it. I ask them to walk me through the last time they did the task, what they used, and where they got stuck. Then the design answers what they told me, not what I hoped to hear.
+
+It also changes how I read feedback. "This looks great" tells me nothing. A user who can't find the button in a quick test tells me a lot.
+
+</Side>
+<Side title="In engineering">
+
+Engineering has its own version of mom: my own assumptions. It's easy to build for the requirement I imagined instead of the one that exists. So I apply the same rules to the system. I look at what people actually did (logs, analytics, support tickets, crash reports) before I trust what anyone predicts they'll do.
+
+It keeps the scope honest. If nobody has had the problem, I don't build the abstraction for it yet. If the data shows they hit it every day, it moves up the list.
+
+</Side>
+</Sides>
+
+The Mom Test is why "Start with the problem" is the first step and not a formality. Good questions up front are the cheapest code I'll ever write, because they stop me from building the wrong thing well.
+
 ## How I work
 
 - I bring structure to ambiguity. Give me a fuzzy goal and I'll come back with a plan, a data model, and a first screen.

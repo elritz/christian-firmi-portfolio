@@ -9,7 +9,7 @@ import { baseUrl } from '@/app/sitemap';
 import { Side, Sides, Step, Steps } from './components';
 
 // Update this whenever the article changes.
-const revised = '2026-09-15';
+const revised = '2026-09-25';
 
 const lede =
   "I'm Christian Firmi, a software product engineer focused on mobile applications. I work in both, and I carry an idea from the first sketch to the shipped release, aware of every layer in between.";
