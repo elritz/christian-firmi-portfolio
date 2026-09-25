@@ -1,9 +1,31 @@
+import React from 'react';
 import Image from 'next/image';
 
 // Building blocks for project posts, used from MDX.
 
-/** A row of phone screenshots with captions. */
-export function Screens({ children }: { children: React.ReactNode }) {
+/**
+ * A row of phone screenshots with captions. `fill` spreads them evenly across
+ * the full text width, one column per screenshot, so the row lines up with a
+ * full-width image above or below it.
+ */
+export function Screens({
+  fill = false,
+  children,
+}: {
+  fill?: boolean;
+  children: React.ReactNode;
+}) {
+  if (fill) {
+    const count = React.Children.toArray(children).filter(React.isValidElement).length;
+    return (
+      <div
+        className='not-prose my-10 grid gap-4 sm:gap-6'
+        style={{ gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` }}
+      >
+        {children}
+      </div>
+    );
+  }
   return (
     <div className='not-prose my-10 grid grid-cols-2 gap-4 sm:grid-cols-4'>
       {children}
