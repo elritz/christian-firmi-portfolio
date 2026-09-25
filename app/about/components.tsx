@@ -60,3 +60,11 @@ export function Side({
     </section>
   );
 }
+
+export function Oneliner({ children }: { children: React.ReactNode }) {
+  return (
+    <p className='mt-10 font-display text-2xl leading-tight text-zinc-900 sm:text-3xl dark:text-zinc-100'>
+      {children}
+    </p>
+  );
+}

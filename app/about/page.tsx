@@ -6,7 +6,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Navigation } from '@/app/components/nav';
 import { TransitionLink } from '@/app/components/page-transition';
 import { baseUrl } from '@/app/sitemap';
-import { Side, Sides, Step, Steps } from './components';
+import { Oneliner, Side, Sides, Step, Steps } from './components';
 
 // Update this whenever the article changes.
 const revised = '2026-09-25';
@@ -43,6 +43,7 @@ function MdxLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 }
 
 const components = {
+  Oneliner,
   Steps,
   Step,
   Sides,
