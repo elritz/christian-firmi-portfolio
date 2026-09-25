@@ -115,6 +115,15 @@ export default function AboutPage() {
             </time>
             .
           </p>
+          <p className='mt-2 text-sm text-zinc-500 dark:text-zinc-400'>
+            Read with:{' '}
+            <TransitionLink
+              href='/blog/how-to-design'
+              className='text-zinc-900 underline underline-offset-4 decoration-zinc-300 duration-200 hover:decoration-orange-500 dark:text-zinc-100 dark:decoration-zinc-700 dark:hover:decoration-orange-500'
+            >
+              Design Development Communication
+            </TransitionLink>
+          </p>
         </header>
 
         <article className='mt-6'>
