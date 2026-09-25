@@ -25,6 +25,27 @@ Before structure or screens, I talk to the people who have the problem, followin
 
 Compliments and "I'd definitely use that" are bad data. What people already did, what it cost them, and what they'll commit to now are good data. Those answers decide what gets designed, and they're what I point to when I argue for a redesign, or against one. I've written more about it on my [about page](/about), and there's a worked example in the [Scoreboard](/blog/scoreboard) post.
 
+## Intuition: when to go, and when not to
+
+<Lede>Good design makes the next step feel obvious, and makes the risky step feel like a step.</Lede>
+
+Users don't read an interface, they sense it. Within a second they decide whether they can go ahead or should stop. That feeling is intuition, and it's built from signals the design either gives or withholds.
+
+- **Go** should look like go. One clear primary action per screen, placed where the eye lands, labelled with what it does ("Start match", not "Submit"). If there are three equal buttons, nobody knows where to go.
+- **Not yet** should look like not yet. A disabled button that says what's missing beats an error after the tap. People stop without having to think about why.
+- **Stop** should cost a moment. Deleting, paying, or sending to everyone gets a pause, a different colour, or a second step. Everyday actions don't, or the pauses stop meaning anything.
+- **Undo** beats "Are you sure?". When a mistake is cheap to reverse, people move faster and trust the app more. In [Scoreboard](/blog/scoreboard), undo sits right next to every call for exactly this reason.
+- **Feedback** closes the loop. Every tap answers with something: a state change, a sound, a number moving. Silence makes people tap again, or give up.
+
+### When I decide on instinct
+
+The same go and stop signals apply to me as the designer. With enough projects behind me, a lot of decisions are automatic: I see the screen and I know. The skill is knowing which decisions are allowed to be automatic.
+
+- **I decide on the spot** when the change is cheap to undo, small in reach, and a pattern I've already seen work with real users. Spacing, labels, the order of a list, a default value. Checking these with users would cost more than getting one wrong.
+- **I stop and check** when the change is hard to reverse, touches a lot of people, costs money, or is new territory where I have no evidence yet. A navigation overhaul, a data model, pricing. There, intuition only gives me the question to ask; what users actually did gives the answer.
+
+When the instinct and the evidence agree, I go. When they don't, I don't, and that disagreement is usually the most useful thing I learn.
+
 ## Information architecture
 
 <Lede>Clear structure and user flows so people find what they need fast.</Lede>
