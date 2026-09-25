@@ -34,6 +34,7 @@ import {
   Stat,
 } from './post-blocks';
 import { IvyWireframe } from './ivy-wireframe';
+import { FeatureTabs } from './feature-tabs';
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -127,6 +128,7 @@ let components = {
   Image: RoundedImage,
   FigmaEmbed,
   IvyWireframe,
+  FeatureTabs,
   Highlights,
   Highlight,
   EmojiMoods,
