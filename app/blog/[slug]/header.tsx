@@ -191,7 +191,7 @@ export const Header: React.FC<Props> = ({ post }) => {
               width={352}
               height={714}
               priority
-              className='h-auto w-40 shrink-0 sm:w-48 md:w-56 lg:w-64 drop-shadow-[0_28px_48px_rgba(0,0,0,0.4)]'
+              className='h-auto w-40 shrink-0 rounded-[22px] sm:w-48 md:w-56 lg:w-64 drop-shadow-[0_28px_48px_rgba(0,0,0,0.4)]'
             />
           )}
         </div>
