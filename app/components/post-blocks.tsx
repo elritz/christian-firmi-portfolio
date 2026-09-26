@@ -251,6 +251,17 @@ export function Lede({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** An interview question, set apart from its answer as an orange pull quote. */
+export function Question({ children }: { children: React.ReactNode }) {
+  return (
+    <blockquote className='not-prose mt-12 mb-4 border-l-4 border-orange-500 pl-5'>
+      <h3 className='font-display text-xl leading-snug tracking-tight text-orange-600 sm:text-2xl dark:text-orange-400'>
+        “{children}”
+      </h3>
+    </blockquote>
+  );
+}
+
 /** A row of big numbers with labels, for the facts that should be read at a glance. */
 export function Stats({ children }: { children: React.ReactNode }) {
   return (

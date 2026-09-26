@@ -30,6 +30,7 @@ import {
   Stack,
   StackGroup,
   Lede,
+  Question,
   Stats,
   Stat,
 } from './post-blocks';
@@ -154,6 +155,7 @@ let components = {
   Stack,
   StackGroup,
   Lede,
+  Question,
   Stats,
   Stat,
   a: CustomLink,
