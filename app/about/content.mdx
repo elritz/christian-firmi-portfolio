@@ -1,116 +1,43 @@
-This is a living article. I come back to it to edit and refine it, and to remind myself how I work when I'm stuck. It changes as I do.
+<Oneliner>Engineering and design.</Oneliner>
 
-Most roles stop at a boundary. Designers hand off. Engineers build to the spec. Product managers write it. Those boundaries make sense on a large team, but they hide the place where the real decisions get made: the point where what a person is trying to do meets how the data has to be shaped, how the screen should feel, and what it costs to build and keep running.
+Start at the top building context, find the problem and the people who have it, and work down through structure, design, data, and code until it ships. Then measure and go again. Until the problem is solved and delivery the product.
 
-<Oneliner>Engineering and design, one role, both ways.</Oneliner>
-
-That point is where I like to work. I engineer ideas. I start at the top, with the problem and the person who has it, and work down through structure, design, data, and code until it ships. Then I measure and go again. Because I've built every layer myself, I know where the details hide.
-
-## Where it started
-
-I used to draw everything by hand. Every idea began as a pencil sketch on paper, and for a long time the sketch was the whole design.
-
-Then I learned Photoshop, and after that Sketch. Learning each tool meant working out what it could do, why it worked the way it did, and what the people who were good with it knew that I didn't. Somewhere in there I realized I wasn't only learning software. I was learning how to research: find the source, study the work, try it, and go back to the source when it breaks.
-
-That habit is what pulled me into full cycle development. Once I could follow a sketch into screens, then into data, then into code, every layer I researched made the next idea faster to try. It's still the crux of how I work. Research across the whole cycle is what makes the learning, and the ideas, move faster.
+Why work this way? Because details matter, mistakes happen, and I care about what I'm building. Top down, every detail has a reason above it, so when a mistake shows up I can trace it back to the decision that caused it and fix it there.
 
 ## Top down, full cycle
 
-Every project on this site ran through the same sequence, whether I was the only person on it or one of a team.
+The ideal loop, the sweet spot where development feels whole.
 
 <Steps>
-<Step title="Start with the problem">
+<Step title="Start with the probe">
 
-Who is this for, and what are they trying to get done? When I joined iGuide I studied the existing app the way a user sees it and recreated its designs before I read the code. That gave me the user story and showed me where the experience had room to improve.
+Find the sources of truth first, one for each side of the job.
 
-</Step>
-<Step title="Map the structure">
+- **Product design: [the Mom Test](https://www.momtestbook.com/).** Ask what people actually did the last time they hit the problem. Their life, not the idea. [Biggest change in my product development].
+- **Engineering: [fit, form, function](https://en.wikipedia.org/wiki/Form,_fit_and_function).** A simple but useful philosophy from engineering. What does it plug into, what shape must it hold, and how will I prove it works?
 
-Information architecture and user flows come before any screen. Where does everything live, how do you get there, and what is one tap away? For iGuide's camera and capture screens I drew the navigation system and the data behind it, then shared it with the team and our designer so we were all arguing about the same thing.
-
-</Step>
-<Step title="Design the screens">
-
-Wireframes first, then real designs in Figma. Wireframes keep the work moving when customer feedback is slow, and the design language gets set here, so I take it seriously. At MyEffect I worked with our designer to build the design system and component library the web app was written against.
+Every step after this answers to those two.
 
 </Step>
-<Step title="Shape the data">
+<Step title="A map of the structure">
 
-Relational models, normalization, authorization, migrations. Most product bugs are born here, so I'd rather spend the time up front than in support. MyEffect's shift check-in model and its GraphQL subscriptions came out of this step. So did the access and refresh token device management in my authorization microservice.
+Information architecture and user flows before any screen. Where does everything live, and how do you get there?
 
-</Step>
-<Step title="Build the client">
-
-React Native and native code, state management, and performance. Swift ARKit modules and a proprietary spatial-measurement library for iGuide's interior measurements. MMKV, FlashList, a bridgeless React Native migration, and a React Query upgrade for a Wynshop app used by more than twenty grocery organizations.
+The map isn't the answer. It's a place of comfort, common ground where design and engineering can both stand while we choose a direction.
 
 </Step>
-<Step title="Ship, measure, repeat">
+<Step title="Design vs. engineering">
 
-Builds, CI, analytics, demos, documentation. Moving Wynshop's builds to a Mac Mini took build time from 45 minutes to 15. At iGuide I run the release demos and wrote the onboarding docs, because the work isn't done until other people can use it and carry it forward.
+Screens and data, worked out side by side against the same map. Wireframes, then the design language. Models, normalization, then authorization.
+
+They pull against each other, and that's the useful part. We might be arguing, or confused, but at least we're arguing and confused about the same thing, in the same way.
+
+</Step>
+<Step title="Produce, release, deliver, then report">
+
+Build it, ship it, and bring back what happened.
+
+This is how we reach the end point together: we understand the frictions together and build the team together. A team is the collective knowledge it builds along the way.
 
 </Step>
 </Steps>
-
-## Two sides of the same job
-
-<Sides>
-<Side title="The strict side">
-
-Types before code. Data models drawn and normalized before a resolver exists. Tests on the paths that cost money when they break. Templating scripts so navigation, components, and icons are consistent by construction rather than by code review. Build times measured, not felt.
-
-Engineering has rules, and I like that about it. The rules are how a product stays standing after the first version.
-
-</Side>
-<Side title="The open side">
-
-A blank Figma frame is where I think best. Redesigning an existing app teaches me its user story faster than reading its source. I'll draw three navigation systems before I pick one, and I defend the pick with reasons, not taste.
-
-Design isn't decoration laid over the system. It's how the system is understood, by the user and by the team.
-
-</Side>
-</Sides>
-
-The two sides feed each other. The templating scripts at iGuide exist because I wanted the design system enforced by the tooling, not the reviewer. The camera designs exist so the data model and the navigation could be argued about on the same screen. The good decisions on every project came from holding both at once.
-
-## Design philosophy: the Mom Test
-
-The theory I lean on most comes from Rob Fitzpatrick's [The Mom Test](https://www.momtestbook.com/). The name comes from a simple point: you can't ask your mom whether your idea is good. She loves you, so she'll say yes. Most people will do the same. Ask someone for an opinion about your idea and they'll protect your feelings, so you get compliments, not the truth.
-
-The fix is to stop asking about the idea at all. The book gives three rules:
-
-- **Talk about their life instead of your idea.** What do they do today, and where does it hurt?
-- **Ask about specifics in the past instead of generics or opinions about the future.** "When did this last happen, and what did you do?" beats "Would you use this?"
-- **Talk less and listen more.** The moment I start pitching, the learning stops.
-
-Compliments, hypotheticals, and "I would definitely use that" are bad data. What someone already did, what it cost them, and what they'll commit to now (time, a trial, a pilot, money) is good data.
-
-<Sides>
-<Side title="In design">
-
-It changes the questions I bring to research. I don't show a mockup and ask whether people like it. I ask them to walk me through the last time they did the task, what they used, and where they got stuck. Then the design answers what they told me, not what I hoped to hear.
-
-It also changes how I read feedback. "This looks great" tells me nothing. A user who can't find the button in a quick test tells me a lot.
-
-</Side>
-<Side title="In engineering">
-
-Engineering has its own version of mom: my own assumptions. It's easy to build for the requirement I imagined instead of the one that exists. So I apply the same rules to the system. I look at what people actually did (logs, analytics, support tickets, crash reports) before I trust what anyone predicts they'll do.
-
-It keeps the scope honest. If nobody has had the problem, I don't build the abstraction for it yet. If the data shows they hit it every day, it moves up the list.
-
-</Side>
-</Sides>
-
-The Mom Test is why "Start with the problem" is the first step and not a formality. Good questions up front are the cheapest code I'll ever write, because they stop me from building the wrong thing well.
-
-## How I work
-
-- I bring structure to ambiguity. Give me a fuzzy goal and I'll come back with a plan, a data model, and a first screen.
-- I sweat the details, and I know which ones matter.
-- I'm self-managed and not afraid of the grind.
-- I take feedback well. I'd rather be corrected in review than wrong in production.
-- I write it down and I show it: onboarding docs, release demos, engineering presentations.
-
-## Now
-
-I'm on the Data Acquisition team at [iGuide Planitar](https://store.goiguide.com/), building the mobile capture app used during property surveys: ARKit measurement, camera integrations, React Native and Swift. On the side I'm going deeper on Go and data structures, and I still open Figma before I open an editor.

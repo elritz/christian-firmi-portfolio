@@ -12,7 +12,7 @@ import { Oneliner, Side, Sides, Step, Steps } from './components';
 const revised = '2026-09-25';
 
 const lede =
-  "I'm Christian Firmi, a software product engineer focused on mobile applications. I work in both, and I carry an idea from the first sketch to the shipped release, aware of every layer in between.";
+  "Software product engineer focused on mobile applications. Ideas from the first sketch to the shipped products, unstanding and skilled in the layers in between.";
 
 export const metadata: Metadata = {
   title: 'Product Engineer',
